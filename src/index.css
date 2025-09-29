@@ -2,41 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* AXEL Racing Team Design System - Futuristic Racing Aesthetics */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark racing theme */
+    --background: 0 0% 2%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Racing neon highlights */
+    --primary: 210 100% 60%;
+    --primary-foreground: 0 0% 2%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 6%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 140 100% 50%;
+    --accent-foreground: 0 0% 2%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 12%;
+    --input: 0 0% 8%;
+    --ring: 210 100% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Racing-specific design tokens */
+    --racing-blue: 210 100% 60%;
+    --racing-green: 140 100% 50%;
+    --racing-red: 0 100% 60%;
+    --racing-yellow: 50 100% 60%;
+    
+    /* Gradients */
+    --gradient-racing: linear-gradient(135deg, hsl(var(--racing-blue)), hsl(var(--racing-green)));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 2% / 0.3), hsl(0 0% 2% / 0.8));
+    --gradient-accent: linear-gradient(45deg, hsl(var(--racing-blue)), hsl(var(--racing-red)));
+    
+    /* Shadows and glows */
+    --shadow-racing: 0 0 30px hsl(var(--racing-blue) / 0.3);
+    --shadow-accent: 0 0 20px hsl(var(--racing-green) / 0.4);
+    --glow-text: 0 0 10px hsl(var(--racing-blue) / 0.6);
+    
+    /* Animations */
+    --transition-racing: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: all 0.5s ease-in-out;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +120,72 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  /* Racing text effects */
+  .text-glow {
+    text-shadow: var(--glow-text);
+  }
+  
+  .gradient-text {
+    background: var(--gradient-racing);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Hero video overlay */
+  .hero-overlay {
+    background: var(--gradient-hero);
+    backdrop-filter: blur(1px);
+  }
+  
+  /* Racing button effects */
+  .racing-glow {
+    box-shadow: var(--shadow-racing);
+    transition: var(--transition-glow);
+  }
+  
+  .racing-glow:hover {
+    box-shadow: var(--shadow-accent);
+    transform: translateY(-2px);
+  }
+  
+  /* Pulse animation for coming soon */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes pulse-glow {
+    from {
+      text-shadow: 0 0 5px hsl(var(--racing-blue) / 0.5);
+    }
+    to {
+      text-shadow: 0 0 20px hsl(var(--racing-blue) / 0.8);
+    }
+  }
+  
+  /* Smooth fade in animations */
+  .fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .fade-in-delay {
+    animation: fadeIn 1s ease-out 0.5s both;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
