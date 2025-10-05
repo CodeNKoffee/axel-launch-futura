@@ -152,7 +152,7 @@ export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }
 
       {/* Bottom Text Reveal */}
       <motion.div
-        className="absolute bottom-20 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6"
+        className="absolute bottom-12 sm:bottom-16 md:bottom-20 left-0 right-0 mx-auto w-[95%] sm:w-[85%] md:w-full md:max-w-2xl px-3 sm:px-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: [0, 1, 1, 1, 0], y: [20, 0, 0, 0, -10] }}
         transition={{
@@ -162,16 +162,16 @@ export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }
           ease: 'easeOut'
         }}
       >
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center justify-center">
           <motion.p 
-            className="text-white/80 text-sm md:text-base tracking-[0.15em] font-light mb-3 italic mx-auto"
+            className="text-white/80 text-[0.65rem] leading-tight sm:text-sm md:text-base tracking-[0.05em] sm:tracking-[0.12em] md:tracking-[0.15em] font-light mb-2 sm:mb-3 italic max-w-full"
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             "The will to win is nothing without the will to prepare"
           </motion.p>
           <motion.div 
-            className="h-[1px] w-40 mx-auto bg-gradient-to-r from-transparent via-accent to-transparent"
+            className="h-[1px] w-20 sm:w-32 md:w-40 bg-gradient-to-r from-transparent via-accent to-transparent"
             animate={{ scaleX: [0, 1, 1, 1, 0], opacity: [0, 1, 1, 1, 0] }}
             transition={{ duration: 5.5, ease: 'easeInOut' }}
           />
