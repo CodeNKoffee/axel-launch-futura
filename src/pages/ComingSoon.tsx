@@ -71,6 +71,9 @@ const ComingSoon = () => {
             <div className="mb-8 fade-in relative">
               <motion.div
                 className="relative w-32 h-32 md:w-48 md:h-48 mx-auto mb-6"
+                initial={{
+                  filter: 'drop-shadow(0 0 20px rgba(33, 150, 243, 0.4)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.2))'
+                }}
                 animate={{
                   filter: isPlaying
                     ? [
@@ -82,11 +85,18 @@ const ComingSoon = () => {
                       ]
                     : 'drop-shadow(0 0 20px rgba(33, 150, 243, 0.4)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.2))'
                 }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
+                transition={
+                  isPlaying
+                    ? {
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }
+                    : {
+                        duration: 2,
+                        ease: "easeInOut"
+                      }
+                }
               >
                 <img
                   src={axelLogo}

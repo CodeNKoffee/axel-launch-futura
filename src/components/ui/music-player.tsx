@@ -614,7 +614,12 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
             {tracks.map((track, idx) => (
               <button
                 key={idx}
-                onClick={() => setIndex(idx)}
+                onClick={() => {
+                  setIndex(idx);
+                  if (!isPlaying) {
+                    setTimeout(() => play(), 100);
+                  }
+                }}
                 className={`w-full text-left p-2 rounded-lg transition-all duration-300 ${
                   idx === index
                     ? 'bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(33,150,243,0.2)]'
