@@ -42,7 +42,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.9);
   const [error, setError] = useState<string | null>(null);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Start collapsed after intro
   const [waveformBars, setWaveformBars] = useState<number[]>(Array(32).fill(20));
   const [glowColor, setGlowColor] = useState({ r: 33, g: 150, b: 243 }); // Start with primary blue
 

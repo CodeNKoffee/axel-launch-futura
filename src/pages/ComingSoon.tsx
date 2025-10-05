@@ -5,11 +5,18 @@ import axelLogo from '@/assets/axel-logo.png';
 import racingBg1 from '@/assets/racing-bg-1.jpg';
 import racingBg2 from '@/assets/racing-bg-2.jpg';
 import { MusicPlayer } from '@/components/ui/music-player';
+import { F1StartingLights } from '@/components/F1StartingLights';
+
+const backgrounds = [racingBg1, racingBg2];
 
 const ComingSoon = () => {
+  const [showIntro, setShowIntro] = useState(true);
   const [currentBg, setCurrentBg] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const backgrounds = [racingBg1, racingBg2];
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,31 +46,35 @@ const ComingSoon = () => {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
-      {/* Dynamic Background Images */}
-      {backgrounds.map((bg, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-2000 ${
-            index === currentBg ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <img
-            src={bg}
-            alt="Racing background"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      ))}
+    <>
+      {/* F1 Starting Lights Intro */}
+      {showIntro && <F1StartingLights onComplete={handleIntroComplete} />}
+      
+      <div className="relative min-h-screen overflow-hidden bg-black">
+        {/* Dynamic Background Images */}
+        {backgrounds.map((bg, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-2000 ${
+              index === currentBg ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={bg}
+              alt="Racing background"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
 
-      {/* Overlay */}
-      <div className="absolute inset-0 hero-overlay" />
+        {/* Overlay */}
+        <div className="absolute inset-0 hero-overlay" />
 
-      {/* Music Player */}
-      <MusicPlayer hidden={false} />
+        {/* Music Player - starts collapsed */}
+        <MusicPlayer hidden={false} />
 
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex flex-col">
+        {/* Main Content */}
+        <div className="relative z-10 min-h-screen flex flex-col">
         {/* Hero Section */}
         <main className="flex-1 flex items-center justify-center px-6">
           <div className="text-center max-w-4xl mx-auto">
@@ -149,6 +160,7 @@ const ComingSoon = () => {
         </footer>
       </div>
     </div>
+    </>
   );
 };
 
