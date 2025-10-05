@@ -279,10 +279,68 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: isCollapsed ? 1 : 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={`absolute -left-12 top-1/2 -translate-y-1/2 h-24 w-12 rounded-l-2xl border border-r-0 border-primary/30 bg-gradient-to-br from-black/95 to-black/80 backdrop-blur-xl flex items-center justify-center hover:border-primary/60 shadow-[-4px_0_20px_rgba(33,150,243,0.1)] ${isCollapsed ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          className={`absolute -left-12 top-1/2 -translate-y-1/2 h-24 w-12 rounded-l-2xl bg-gradient-to-br from-black/95 to-black/80 backdrop-blur-xl flex items-center justify-center shadow-[-4px_0_20px_rgba(33,150,243,0.1)] overflow-hidden ${isCollapsed ? 'pointer-events-auto' : 'pointer-events-none'}`}
           onClick={() => setIsCollapsed(false)}
           aria-label="Open music player"
+          style={{
+            border: '2px solid',
+            borderRight: 'none',
+            borderColor: isPlaying ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})` : 'rgba(33, 150, 243, 0.3)'
+          }}
         >
+          {/* Racing light animation around border */}
+          {isPlaying && (
+            <>
+              <motion.div
+                className="absolute inset-0 rounded-l-2xl"
+                style={{
+                  background: `conic-gradient(
+                    from 0deg,
+                    transparent 0%,
+                    transparent 85%,
+                    rgba(76, 175, 80, 0.3) 90%,
+                    rgba(33, 150, 243, 0.5) 93%,
+                    rgba(76, 175, 80, 0.3) 96%,
+                    transparent 100%
+                  )`,
+                  padding: '2px',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                  maskComposite: 'exclude'
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-l-2xl"
+                style={{
+                  background: `conic-gradient(
+                    from 180deg,
+                    transparent 0%,
+                    transparent 85%,
+                    rgba(33, 150, 243, 0.3) 90%,
+                    rgba(76, 175, 80, 0.5) 93%,
+                    rgba(33, 150, 243, 0.3) 96%,
+                    transparent 100%
+                  )`,
+                  padding: '2px',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                  maskComposite: 'exclude'
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            </>
+          )}
           <div className="flex flex-col items-center gap-2">
             <motion.svg 
               width="20" 
@@ -388,7 +446,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
 
           {/* Dynamic Waveform Visualization */}
           <div className="relative px-6 py-4 border-b border-primary/10">
-            <div className="flex items-end justify-between h-16 gap-[2px]">
+            <div className="flex items-end justify-between h-20 gap-[2px]">
               {waveformBars.map((height, i) => {
                 const normalizedHeight = Math.max(15, Math.min(100, height));
                 const bassZone = i < 8;
@@ -410,7 +468,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
                     }}
                     style={{
                       boxShadow: isPlaying && normalizedHeight > 60 
-                        ? `0 0 8px rgba(33, 150, 243, ${opacity * 0.5})`
+                        ? `0 0 16px rgba(76, 175, 80, ${opacity * 0.7}), 0 0 8px rgba(76, 175, 80, ${opacity * 0.4})`
                         : 'none'
                     }}
                   />
