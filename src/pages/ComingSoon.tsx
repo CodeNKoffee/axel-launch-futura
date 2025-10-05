@@ -3,6 +3,7 @@ import { Github, Instagram, Linkedin, Youtube } from 'lucide-react';
 import axelLogo from '@/assets/axel-logo.png';
 import racingBg1 from '@/assets/racing-bg-1.jpg';
 import racingBg2 from '@/assets/racing-bg-2.jpg';
+import { MusicPlayer } from '@/components/ui/music-player';
 
 const ComingSoon = () => {
   const [currentBg, setCurrentBg] = useState(0);
@@ -43,6 +44,9 @@ const ComingSoon = () => {
 
       {/* Overlay */}
       <div className="absolute inset-0 hero-overlay" />
+
+      {/* Music Player */}
+      <MusicPlayer hidden={false} />
 
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col">
