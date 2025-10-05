@@ -8,14 +8,18 @@ interface Track {
   src: string;
 }
 
-// F1 Movie Soundtrack by Daniel Pemberton
+// F1 Movie Soundtrack - Official Tracklist
 const tracks: Track[] = [
-  { title: 'Main Titles', artist: 'Daniel Pemberton', src: '/songs/Main%20Titles.mp3' },
-  { title: 'Race Ready', artist: 'Daniel Pemberton', src: '/songs/Race%20Ready.mp3' },
-  { title: 'Lights Out', artist: 'Daniel Pemberton', src: '/songs/Lights%20Out.mp3' },
-  { title: 'Full Throttle', artist: 'Daniel Pemberton', src: '/songs/Full%20Throttle.mp3' },
-  { title: 'Apex Legends', artist: 'Daniel Pemberton', src: '/songs/Apex%20Legends.mp3' },
-  { title: 'Podium Finish', artist: 'Daniel Pemberton', src: '/songs/Podium%20Finish.mp3' }
+  { title: 'Just Keep Watching (From F1® The Movie)', artist: 'Tate McRae, F1 The Album', src: '/songs/Just Keep Watching - Tate McRae.mp3' },
+  { title: 'Lose My Mind (feat. Doja Cat) [From F1® The Movie]', artist: 'Don Toliver, Doja Cat, F1 The Album', src: '/songs/Lose My Mind Don Toliver feat Doja Cat.mp3' },
+  { title: 'Messy (From F1® The Movie)', artist: 'ROSÉ, F1 The Album', src: '/songs/Messy from F1 The Movie - ROSE.mp3' },
+  { title: 'Drive (From F1® The Movie)', artist: 'Ed Sheeran, F1 The Album', src: '/songs/Drive Ed Sheeran.mp3' },
+  { title: "Don't Let Me Drown - From F1® The Movie", artist: 'Burna Boy, F1 The Album', src: '/songs/Dont Let Me Drown - Burna Boy.mp3' },
+  { title: 'Bad As I Used To Be (From F1® The Movie)', artist: 'Chris Stapleton, F1 The Album', src: '/songs/Bad As I Used To Be - Chris Stapleton.mp3' },
+  { title: 'OMG! (From F1® The Movie)', artist: 'Tiësto, Sexyy Red, F1 The Album', src: '/songs/OMG From F1 The Movie Tiesto.mp3' },
+  { title: 'Underdog (From F1® The Movie)', artist: 'Roddy Ricch, F1 The Album', src: '/songs/Underdog Roddy Ricch.mp3' },
+  { title: 'No Room For A Saint (From F1® The Movie)', artist: 'Dom Dolla, Nathan Nicholson, F1 The Album', src: '/songs/No Room For A Saint - Dom Dolla.mp3' },
+  { title: 'DOUBLE C - From F1® The Movie', artist: 'PAWSA, F1 The Album', src: '/songs/DOUBLE C - From F1 The Movie' }
 ];
 
 const fmt = (s: number) => {
