@@ -44,6 +44,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
   const [error, setError] = useState<string | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [waveformBars, setWaveformBars] = useState<number[]>(Array(32).fill(20));
+  const [glowColor, setGlowColor] = useState({ r: 33, g: 150, b: 243 }); // Start with primary blue
 
   const current = tracks[index];
 
@@ -204,6 +205,54 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
     return () => clearInterval(interval);
   }, [isPlaying]);
 
+  // Smooth color transition for glow effect
+  useEffect(() => {
+    if (!isPlaying) {
+      // Return to primary blue when paused
+      const returnToBlue = setInterval(() => {
+        setGlowColor(prev => ({
+          r: prev.r + (33 - prev.r) * 0.05,
+          g: prev.g + (150 - prev.g) * 0.05,
+          b: prev.b + (243 - prev.b) * 0.05
+        }));
+      }, 50);
+      return () => clearInterval(returnToBlue);
+    }
+
+    // Smooth color cycling when playing: Blue → Cyan → Green → Blue
+    const colorPhases = [
+      { r: 33, g: 150, b: 243 },   // Primary Blue
+      { r: 0, g: 188, b: 212 },     // Cyan
+      { r: 76, g: 175, b: 80 },     // Accent Green
+      { r: 33, g: 150, b: 243 }     // Back to Blue
+    ];
+    
+    let currentPhase = 0;
+    let progress = 0;
+
+    const animateColor = () => {
+      const from = colorPhases[currentPhase];
+      const to = colorPhases[(currentPhase + 1) % colorPhases.length];
+      
+      progress += 0.003; // Very slow, subtle transition
+      
+      if (progress >= 1) {
+        progress = 0;
+        currentPhase = (currentPhase + 1) % colorPhases.length;
+      }
+
+      // Smooth interpolation between colors
+      setGlowColor({
+        r: from.r + (to.r - from.r) * progress,
+        g: from.g + (to.g - from.g) * progress,
+        b: from.b + (to.b - from.b) * progress
+      });
+    };
+
+    const interval = setInterval(animateColor, 50);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
   const remaining = Math.max(0, duration - currentTime);
   const progress = duration ? currentTime / duration : 0;
 
@@ -235,20 +284,55 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
           aria-label="Open music player"
         >
           <div className="flex flex-col items-center gap-2">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+            <motion.svg 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              animate={{
+                color: isPlaying 
+                  ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
+                  : 'hsl(var(--primary))',
+                y: isPlaying ? [-1, 1, -1] : 0
+              }}
+              transition={{
+                color: { duration: 1, ease: "easeInOut" },
+                y: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+              }}
+            >
               <path d="M9 18V5l12-2v13" />
               <circle cx="6" cy="18" r="3" />
               <circle cx="18" cy="16" r="3" />
-            </svg>
+            </motion.svg>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary/60">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </div>
         </motion.button>
 
-        <div className="relative h-full overflow-hidden bg-gradient-to-b from-black/95 via-black/90 to-black/95 backdrop-blur-xl border-l border-primary/20 flex flex-col shadow-[-8px_0_30px_rgba(33,150,243,0.15)]">
-          {/* Racing stripe accent */}
-          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary via-accent to-primary opacity-70" />
+        <motion.div 
+          className="relative h-full overflow-hidden bg-gradient-to-b from-black/95 via-black/90 to-black/95 backdrop-blur-xl border-l border-primary/20 flex flex-col"
+          animate={{
+            boxShadow: isPlaying 
+              ? `${-8}px 0 ${30}px rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0.25)`
+              : '-8px 0 30px rgba(33, 150, 243, 0.15)'
+          }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+        >
+          {/* Racing stripe accent with color transition */}
+          <motion.div 
+            className="absolute top-0 left-0 w-1 h-full opacity-70"
+            animate={{
+              background: isPlaying
+                ? `linear-gradient(180deg, rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b}), rgb(76, 175, 80), rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b}))`
+                : 'linear-gradient(180deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)))'
+            }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          />
           
           {/* Close/Collapse Button */}
           <motion.button
@@ -266,8 +350,30 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
           {/* Header */}
           <div className="relative p-6 border-b border-primary/10">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <h3 className="text-xs uppercase tracking-[0.2em] text-primary font-bold">Now Playing</h3>
+              <motion.div 
+                className="w-2 h-2 rounded-full"
+                animate={{
+                  backgroundColor: isPlaying 
+                    ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
+                    : 'rgb(76, 175, 80)',
+                  scale: isPlaying ? [1, 1.2, 1] : 1
+                }}
+                transition={{
+                  backgroundColor: { duration: 1, ease: "easeInOut" },
+                  scale: { duration: 0.8, repeat: Infinity, ease: "easeInOut" }
+                }}
+              />
+              <motion.h3 
+                className="text-xs uppercase tracking-[0.2em] font-bold"
+                animate={{
+                  color: isPlaying 
+                    ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
+                    : 'hsl(var(--primary))'
+                }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              >
+                Now Playing
+              </motion.h3>
             </div>
             <div className="mt-4">
               <h2 className="text-lg font-bold text-white truncate mb-1" title={current.title}>
@@ -486,7 +592,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
             onError={onError}
             preload="metadata"
           />
-        </div>
+        </motion.div>
       </motion.div>
     </AnimatePresence>
   );
