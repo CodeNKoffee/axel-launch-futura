@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Github, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 import axelLogo from '@/assets/axel-logo.png';
 import racingBg1 from '@/assets/racing-bg-1.jpg';
 import racingBg2 from '@/assets/racing-bg-2.jpg';
@@ -7,6 +8,7 @@ import { MusicPlayer } from '@/components/ui/music-player';
 
 const ComingSoon = () => {
   const [currentBg, setCurrentBg] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
   const backgrounds = [racingBg1, racingBg2];
 
   useEffect(() => {
@@ -14,6 +16,18 @@ const ComingSoon = () => {
       setCurrentBg((prev) => (prev + 1) % backgrounds.length);
     }, 8000); // Change background every 8 seconds
 
+    return () => clearInterval(interval);
+  }, []);
+
+  // Listen for music player state (check for audio playing in the page)
+  useEffect(() => {
+    const checkAudioPlaying = () => {
+      const audioElements = document.querySelectorAll('audio');
+      const anyPlaying = Array.from(audioElements).some(audio => !audio.paused);
+      setIsPlaying(anyPlaying);
+    };
+
+    const interval = setInterval(checkAudioPlaying, 500);
     return () => clearInterval(interval);
   }, []);
 
@@ -54,12 +68,32 @@ const ComingSoon = () => {
         <main className="flex-1 flex items-center justify-center px-6">
           <div className="text-center max-w-4xl mx-auto">
             {/* Logo */}
-            <div className="mb-8 fade-in">
-              <img
-                src={axelLogo}
-                alt="AXEL Logo"
-                className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 racing-glow"
-              />
+            <div className="mb-8 fade-in relative">
+              <motion.div
+                className="relative w-32 h-32 md:w-48 md:h-48 mx-auto mb-6"
+                animate={{
+                  filter: isPlaying
+                    ? [
+                        'drop-shadow(0 0 20px rgba(33, 150, 243, 0.6)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.4))',
+                        'drop-shadow(0 0 20px rgba(0, 188, 212, 0.6)) drop-shadow(0 0 40px rgba(0, 188, 212, 0.4))',
+                        'drop-shadow(0 0 20px rgba(76, 175, 80, 0.6)) drop-shadow(0 0 40px rgba(76, 175, 80, 0.4))',
+                        'drop-shadow(0 0 20px rgba(0, 188, 212, 0.6)) drop-shadow(0 0 40px rgba(0, 188, 212, 0.4))',
+                        'drop-shadow(0 0 20px rgba(33, 150, 243, 0.6)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.4))'
+                      ]
+                    : 'drop-shadow(0 0 20px rgba(33, 150, 243, 0.4)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.2))'
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
+                <img
+                  src={axelLogo}
+                  alt="AXEL Logo"
+                  className="w-full h-full"
+                />
+              </motion.div>
             </div>
 
             {/* Tagline */}
