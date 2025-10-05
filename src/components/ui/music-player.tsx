@@ -43,6 +43,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
   const [volume, setVolume] = useState(0.9);
   const [error, setError] = useState<string | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [waveformBars, setWaveformBars] = useState<number[]>(Array(32).fill(20));
 
   const current = tracks[index];
 
@@ -121,6 +122,88 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
     return () => window.removeEventListener('keydown', h);
   }, [toggle]);
 
+  // Dynamic waveform animation
+  useEffect(() => {
+    if (!isPlaying) {
+      // Smooth transition to idle state
+      const idleInterval = setInterval(() => {
+        setWaveformBars(prev => prev.map(val => {
+          const target = 20;
+          const diff = target - val;
+          return val + diff * 0.1;
+        }));
+      }, 50);
+      return () => clearInterval(idleInterval);
+    }
+
+    // Active playing animation with varied intensity
+    const intensityPhases = [
+      { duration: 800, intensity: 0.7 },   // Build up
+      { duration: 600, intensity: 1.0 },   // Peak
+      { duration: 700, intensity: 0.5 },   // Drop
+      { duration: 500, intensity: 0.8 },   // Mid
+    ];
+    
+    let phaseIndex = 0;
+    let lastUpdate = Date.now();
+
+    const animateWaveform = () => {
+      const now = Date.now();
+      const phase = intensityPhases[phaseIndex % intensityPhases.length];
+      
+      if (now - lastUpdate > phase.duration) {
+        phaseIndex++;
+        lastUpdate = now;
+      }
+
+      const currentIntensity = phase.intensity;
+      const nextPhase = intensityPhases[(phaseIndex + 1) % intensityPhases.length];
+      const phaseProgress = Math.min((now - lastUpdate) / phase.duration, 1);
+      const blendedIntensity = currentIntensity + (nextPhase.intensity - currentIntensity) * phaseProgress * 0.3;
+
+      setWaveformBars(prev => prev.map((val, i) => {
+        // Create natural wave patterns
+        const bassZone = i < 8;
+        const midZone = i >= 8 && i < 20;
+        const highZone = i >= 20;
+
+        // Different frequencies react differently
+        let baseHeight = 20;
+        let variance = 60;
+        let smoothing = 0.15;
+
+        if (bassZone) {
+          baseHeight = 30;
+          variance = 70 * blendedIntensity;
+          smoothing = 0.12; // Slower, heavier movement
+        } else if (midZone) {
+          baseHeight = 25;
+          variance = 65 * blendedIntensity;
+          smoothing = 0.18; // Medium response
+        } else if (highZone) {
+          baseHeight = 20;
+          variance = 55 * blendedIntensity;
+          smoothing = 0.25; // Faster, lighter movement
+        }
+
+        // Add some randomness but keep it smooth
+        const time = Date.now() / 1000;
+        const wave1 = Math.sin(time * 2 + i * 0.5) * variance * 0.3;
+        const wave2 = Math.sin(time * 3 - i * 0.3) * variance * 0.2;
+        const randomPulse = Math.sin(time * 4 + i) * variance * 0.5;
+        
+        const target = baseHeight + wave1 + wave2 + randomPulse;
+        
+        // Smooth interpolation towards target
+        const diff = target - val;
+        return val + diff * smoothing;
+      }));
+    };
+
+    const interval = setInterval(animateWaveform, 50);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
   const remaining = Math.max(0, duration - currentTime);
   const progress = duration ? currentTime / duration : 0;
 
@@ -197,19 +280,36 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
             </div>
           </div>
 
-          {/* Waveform visualization placeholder */}
+          {/* Dynamic Waveform Visualization */}
           <div className="relative px-6 py-4 border-b border-primary/10">
-            <div className="flex items-end justify-between h-12 gap-1">
-              {Array.from({ length: 32 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="flex-1 bg-gradient-to-t from-primary to-accent rounded-t transition-all duration-150"
-                  style={{
-                    height: `${isPlaying ? 20 + Math.random() * 80 : 20}%`,
-                    opacity: isPlaying ? 0.4 + Math.random() * 0.6 : 0.2
-                  }}
-                />
-              ))}
+            <div className="flex items-end justify-between h-16 gap-[2px]">
+              {waveformBars.map((height, i) => {
+                const normalizedHeight = Math.max(15, Math.min(100, height));
+                const bassZone = i < 8;
+                const opacity = isPlaying 
+                  ? 0.5 + (normalizedHeight / 200)
+                  : 0.2;
+                
+                return (
+                  <motion.div
+                    key={i}
+                    className={`flex-1 rounded-t ${bassZone ? 'bg-gradient-to-t from-accent via-primary to-primary' : 'bg-gradient-to-t from-primary to-accent'}`}
+                    animate={{ 
+                      height: `${normalizedHeight}%`,
+                      opacity: opacity
+                    }}
+                    transition={{
+                      height: { duration: 0.1, ease: "easeOut" },
+                      opacity: { duration: 0.15, ease: "easeInOut" }
+                    }}
+                    style={{
+                      boxShadow: isPlaying && normalizedHeight > 60 
+                        ? `0 0 8px rgba(33, 150, 243, ${opacity * 0.5})`
+                        : 'none'
+                    }}
+                  />
+                );
+              })}
             </div>
           </div>
 
@@ -345,7 +445,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
           </div>
 
           {/* Track List */}
-          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1">
+          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1 custom-scrollbar">
             <h4 className="text-xs uppercase tracking-wider text-muted-foreground px-2 mb-2">Playlist</h4>
             {tracks.map((track, idx) => (
               <button
