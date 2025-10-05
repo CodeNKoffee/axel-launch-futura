@@ -1,0 +1,664 @@
+"use client";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface Track {
+  title: string;
+  artist: string;
+  src: string;
+}
+
+// F1 Movie Soundtrack - Official Tracklist
+const tracks: Track[] = [
+  { title: 'Just Keep Watching (From F1® The Movie)', artist: 'Tate McRae, F1 The Album', src: '/songs/Just Keep Watching - Tate McRae.mp3' },
+  { title: 'Lose My Mind (feat. Doja Cat) [From F1® The Movie]', artist: 'Don Toliver, Doja Cat, F1 The Album', src: '/songs/Lose My Mind Don Toliver feat Doja Cat.mp3' },
+  { title: 'Messy (From F1® The Movie)', artist: 'ROSÉ, F1 The Album', src: '/songs/Messy from F1 The Movie - ROSE.mp3' },
+  { title: 'Drive (From F1® The Movie)', artist: 'Ed Sheeran, F1 The Album', src: '/songs/Drive Ed Sheeran.mp3' },
+  { title: "Don't Let Me Drown - From F1® The Movie", artist: 'Burna Boy, F1 The Album', src: '/songs/Dont Let Me Drown - Burna Boy.mp3' },
+  { title: 'Bad As I Used To Be (From F1® The Movie)', artist: 'Chris Stapleton, F1 The Album', src: '/songs/Bad As I Used To Be - Chris Stapleton.mp3' },
+  { title: 'OMG! (From F1® The Movie)', artist: 'Tiësto, Sexyy Red, F1 The Album', src: '/songs/OMG From F1 The Movie Tiesto.mp3' },
+  { title: 'Underdog (From F1® The Movie)', artist: 'Roddy Ricch, F1 The Album', src: '/songs/Underdog Roddy Ricch.mp3' },
+  { title: 'No Room For A Saint (From F1® The Movie)', artist: 'Dom Dolla, Nathan Nicholson, F1 The Album', src: '/songs/No Room For A Saint - Dom Dolla.mp3' },
+  { title: 'DOUBLE C - From F1® The Movie', artist: 'PAWSA, F1 The Album', src: '/songs/DOUBLE C - From F1 The Movie' }
+];
+
+const fmt = (s: number) => {
+  if (!isFinite(s)) return '--:--';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2, '0')}`;
+};
+
+interface MusicPlayerProps { hidden?: boolean }
+
+export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [index, setIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [repeat, setRepeat] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
+  const [history, setHistory] = useState<number[]>([]); // for back navigation when shuffled
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [volume, setVolume] = useState(0.9);
+  const [error, setError] = useState<string | null>(null);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Start collapsed after intro
+  const [waveformBars, setWaveformBars] = useState<number[]>(Array(32).fill(20));
+  const [glowColor, setGlowColor] = useState({ r: 33, g: 150, b: 243 }); // Start with primary blue
+
+  const current = tracks[index];
+
+  const onLoaded = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration || 0);
+    }
+    setError(null);
+  };
+  const onTime = () => {
+    if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
+  };
+  const onEnded = () => {
+    if (repeat) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+      }
+      return;
+    }
+    next();
+  };
+
+  const onError = () => {
+    setError('Audio unavailable');
+  };
+
+  const play = useCallback(() => { setIsPlaying(true); audioRef.current?.play(); }, []);
+  const pause = useCallback(() => { setIsPlaying(false); audioRef.current?.pause(); }, []);
+  const toggle = useCallback(() => { (isPlaying ? pause : play)(); }, [isPlaying, pause, play]);
+
+  const next = useCallback(() => {
+    setIndex(i => {
+      if (shuffle) {
+        const choices = tracks.map((_, idx) => idx).filter(idx => idx !== i);
+        const rand = choices[Math.floor(Math.random() * choices.length)] ?? i;
+        setHistory(h => [...h, i]);
+        return rand;
+      }
+      return (i + 1) % tracks.length;
+    });
+  }, [shuffle]);
+  const prev = useCallback(() => {
+    setIndex(i => {
+      if (shuffle && history.length) {
+        const clone = [...history];
+        const last = clone.pop() as number;
+        setHistory(clone);
+        return last;
+      }
+      return (i - 1 + tracks.length) % tracks.length;
+    });
+  }, [shuffle, history]);
+
+  // Track index change handling (retain duration when only play/pause toggles)
+  const prevIndexRef = useRef(index);
+  useEffect(() => {
+    const a = audioRef.current;
+    if (!a) return;
+    const indexChanged = prevIndexRef.current !== index;
+    if (indexChanged) {
+      setDuration(0);
+      setCurrentTime(0);
+      if (isPlaying) {
+        const id = setTimeout(() => { a.play().catch(()=>{}); }, 60);
+        prevIndexRef.current = index;
+        return () => clearTimeout(id);
+      }
+      prevIndexRef.current = index;
+    }
+  }, [index, isPlaying]);
+
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => { if (e.code === 'Space') { e.preventDefault(); toggle(); } };
+    window.addEventListener('keydown', h);
+    return () => window.removeEventListener('keydown', h);
+  }, [toggle]);
+
+  // Dynamic waveform animation
+  useEffect(() => {
+    if (!isPlaying) {
+      // Smooth transition to idle state
+      const idleInterval = setInterval(() => {
+        setWaveformBars(prev => prev.map(val => {
+          const target = 20;
+          const diff = target - val;
+          return val + diff * 0.1;
+        }));
+      }, 50);
+      return () => clearInterval(idleInterval);
+    }
+
+    // Active playing animation with varied intensity
+    const intensityPhases = [
+      { duration: 800, intensity: 0.7 },   // Build up
+      { duration: 600, intensity: 1.0 },   // Peak
+      { duration: 700, intensity: 0.5 },   // Drop
+      { duration: 500, intensity: 0.8 },   // Mid
+    ];
+    
+    let phaseIndex = 0;
+    let lastUpdate = Date.now();
+
+    const animateWaveform = () => {
+      const now = Date.now();
+      const phase = intensityPhases[phaseIndex % intensityPhases.length];
+      
+      if (now - lastUpdate > phase.duration) {
+        phaseIndex++;
+        lastUpdate = now;
+      }
+
+      const currentIntensity = phase.intensity;
+      const nextPhase = intensityPhases[(phaseIndex + 1) % intensityPhases.length];
+      const phaseProgress = Math.min((now - lastUpdate) / phase.duration, 1);
+      const blendedIntensity = currentIntensity + (nextPhase.intensity - currentIntensity) * phaseProgress * 0.3;
+
+      setWaveformBars(prev => prev.map((val, i) => {
+        // Create natural wave patterns
+        const bassZone = i < 8;
+        const midZone = i >= 8 && i < 20;
+        const highZone = i >= 20;
+
+        // Different frequencies react differently
+        let baseHeight = 20;
+        let variance = 60;
+        let smoothing = 0.15;
+
+        if (bassZone) {
+          baseHeight = 30;
+          variance = 70 * blendedIntensity;
+          smoothing = 0.12; // Slower, heavier movement
+        } else if (midZone) {
+          baseHeight = 25;
+          variance = 65 * blendedIntensity;
+          smoothing = 0.18; // Medium response
+        } else if (highZone) {
+          baseHeight = 20;
+          variance = 55 * blendedIntensity;
+          smoothing = 0.25; // Faster, lighter movement
+        }
+
+        // Add some randomness but keep it smooth
+        const time = Date.now() / 1000;
+        const wave1 = Math.sin(time * 2 + i * 0.5) * variance * 0.3;
+        const wave2 = Math.sin(time * 3 - i * 0.3) * variance * 0.2;
+        const randomPulse = Math.sin(time * 4 + i) * variance * 0.5;
+        
+        const target = baseHeight + wave1 + wave2 + randomPulse;
+        
+        // Smooth interpolation towards target
+        const diff = target - val;
+        return val + diff * smoothing;
+      }));
+    };
+
+    const interval = setInterval(animateWaveform, 50);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  // Smooth color transition for glow effect
+  useEffect(() => {
+    if (!isPlaying) {
+      // Return to primary blue when paused
+      const returnToBlue = setInterval(() => {
+        setGlowColor(prev => ({
+          r: prev.r + (33 - prev.r) * 0.05,
+          g: prev.g + (150 - prev.g) * 0.05,
+          b: prev.b + (243 - prev.b) * 0.05
+        }));
+      }, 50);
+      return () => clearInterval(returnToBlue);
+    }
+
+    // Smooth color cycling when playing: Blue → Cyan → Green → Blue
+    const colorPhases = [
+      { r: 33, g: 150, b: 243 },   // Primary Blue
+      { r: 0, g: 188, b: 212 },     // Cyan
+      { r: 76, g: 175, b: 80 },     // Accent Green
+      { r: 33, g: 150, b: 243 }     // Back to Blue
+    ];
+    
+    let currentPhase = 0;
+    let progress = 0;
+
+    const animateColor = () => {
+      const from = colorPhases[currentPhase];
+      const to = colorPhases[(currentPhase + 1) % colorPhases.length];
+      
+      progress += 0.003; // Very slow, subtle transition
+      
+      if (progress >= 1) {
+        progress = 0;
+        currentPhase = (currentPhase + 1) % colorPhases.length;
+      }
+
+      // Smooth interpolation between colors
+      setGlowColor({
+        r: from.r + (to.r - from.r) * progress,
+        g: from.g + (to.g - from.g) * progress,
+        b: from.b + (to.b - from.b) * progress
+      });
+    };
+
+    const interval = setInterval(animateColor, 50);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  const remaining = Math.max(0, duration - currentTime);
+  const progress = duration ? currentTime / duration : 0;
+
+  // If first track already has metadata and user presses play quickly, ensure duration/time display updates.
+  useEffect(() => {
+    const a = audioRef.current;
+    if (isPlaying && a && a.readyState >= 1 && duration === 0) {
+      setDuration(a.duration || 0);
+    }
+  }, [isPlaying, duration]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="music-player"
+        initial={{ x: 400, opacity: 0 }}
+        animate={{ x: hidden ? 400 : (isCollapsed ? 320 : 0), opacity: hidden ? 0 : 1 }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+        className={`fixed top-0 right-0 z-40 h-screen w-80 ${hidden ? 'pointer-events-none select-none' : ''}`}
+        aria-hidden={hidden}
+      >
+        {/* Floating Toggle Button - visible when collapsed */}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isCollapsed ? 1 : 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className={`absolute -left-12 top-1/2 -translate-y-1/2 h-24 w-12 rounded-l-2xl bg-gradient-to-br from-black/95 to-black/80 backdrop-blur-xl flex items-center justify-center shadow-[-4px_0_20px_rgba(33,150,243,0.1)] overflow-hidden ${isCollapsed ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          onClick={() => setIsCollapsed(false)}
+          aria-label="Open music player"
+          style={{
+            border: '2px solid',
+            borderRight: 'none',
+            borderColor: isPlaying ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})` : 'rgba(33, 150, 243, 0.3)'
+          }}
+        >
+          {/* Racing light animation around border */}
+          {isPlaying && (
+            <>
+              <motion.div
+                className="absolute inset-0 rounded-l-2xl"
+                style={{
+                  background: `conic-gradient(
+                    from 0deg,
+                    transparent 0%,
+                    transparent 85%,
+                    rgba(76, 175, 80, 0.3) 90%,
+                    rgba(33, 150, 243, 0.5) 93%,
+                    rgba(76, 175, 80, 0.3) 96%,
+                    transparent 100%
+                  )`,
+                  padding: '2px',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                  maskComposite: 'exclude'
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-l-2xl"
+                style={{
+                  background: `conic-gradient(
+                    from 180deg,
+                    transparent 0%,
+                    transparent 85%,
+                    rgba(33, 150, 243, 0.3) 90%,
+                    rgba(76, 175, 80, 0.5) 93%,
+                    rgba(33, 150, 243, 0.3) 96%,
+                    transparent 100%
+                  )`,
+                  padding: '2px',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                  maskComposite: 'exclude'
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            </>
+          )}
+          <div className="flex flex-col items-center gap-2">
+            <motion.svg 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              animate={{
+                color: isPlaying 
+                  ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
+                  : 'hsl(var(--primary))',
+                y: isPlaying ? [-1, 1, -1] : 0
+              }}
+              transition={{
+                color: { duration: 1, ease: "easeInOut" },
+                y: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+              }}
+            >
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+              <circle cx="18" cy="16" r="3" />
+            </motion.svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary/60">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </div>
+        </motion.button>
+
+        <motion.div 
+          className="relative h-full overflow-hidden bg-gradient-to-b from-black/95 via-black/90 to-black/95 backdrop-blur-xl border-l border-primary/20 flex flex-col"
+          animate={{
+            boxShadow: isPlaying 
+              ? `${-8}px 0 ${30}px rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0.25)`
+              : '-8px 0 30px rgba(33, 150, 243, 0.15)'
+          }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+        >
+          {/* Racing stripe accent with color transition */}
+          <motion.div 
+            className="absolute top-0 left-0 w-1 h-full opacity-70"
+            animate={{
+              background: isPlaying
+                ? `linear-gradient(180deg, rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b}), rgb(76, 175, 80), rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b}))`
+                : 'linear-gradient(180deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)))'
+            }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          />
+          
+          {/* Close/Collapse Button */}
+          <motion.button
+            onClick={() => setIsCollapsed(true)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="absolute top-4 right-4 z-50 h-8 w-8 rounded-lg border border-primary/30 bg-secondary/50 flex items-center justify-center hover:border-primary hover:bg-primary/10 group"
+            aria-label="Collapse music player"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground group-hover:text-primary transition-colors">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </motion.button>
+          
+          {/* Header */}
+          <div className="relative p-6 border-b border-primary/10">
+            <div className="flex items-center gap-3 mb-2">
+              <motion.div 
+                className="w-2 h-2 rounded-full"
+                animate={{
+                  backgroundColor: isPlaying 
+                    ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
+                    : 'rgb(76, 175, 80)',
+                  scale: isPlaying ? [1, 1.2, 1] : 1
+                }}
+                transition={{
+                  backgroundColor: { duration: 1, ease: "easeInOut" },
+                  scale: { duration: 0.8, repeat: Infinity, ease: "easeInOut" }
+                }}
+              />
+              <motion.h3 
+                className="text-xs uppercase tracking-[0.2em] font-bold"
+                animate={{
+                  color: isPlaying 
+                    ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
+                    : 'hsl(var(--primary))'
+                }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              >
+                Now Playing
+              </motion.h3>
+            </div>
+            <div className="mt-4">
+              <h2 className="text-lg font-bold text-white truncate mb-1" title={current.title}>
+                {current.title}
+              </h2>
+              <p className="text-sm text-muted-foreground truncate" title={current.artist}>
+                {current.artist}
+              </p>
+              <p className="text-xs text-primary/60 mt-1">F1 Movie Soundtrack</p>
+            </div>
+          </div>
+
+          {/* Dynamic Waveform Visualization */}
+          <div className="relative px-6 py-4 border-b border-primary/10">
+            <div className="flex items-end justify-between h-20 gap-[2px]">
+              {waveformBars.map((height, i) => {
+                const normalizedHeight = Math.max(15, Math.min(100, height));
+                const bassZone = i < 8;
+                const opacity = isPlaying 
+                  ? 0.5 + (normalizedHeight / 200)
+                  : 0.2;
+                
+                return (
+                  <motion.div
+                    key={i}
+                    className={`flex-1 rounded-t ${bassZone ? 'bg-gradient-to-t from-accent via-primary to-primary' : 'bg-gradient-to-t from-primary to-accent'}`}
+                    animate={{ 
+                      height: `${normalizedHeight}%`,
+                      opacity: opacity
+                    }}
+                    transition={{
+                      height: { duration: 0.1, ease: "easeOut" },
+                      opacity: { duration: 0.15, ease: "easeInOut" }
+                    }}
+                    style={{
+                      boxShadow: isPlaying && normalizedHeight > 60 
+                        ? `0 0 16px rgba(76, 175, 80, ${opacity * 0.7}), 0 0 8px rgba(76, 175, 80, ${opacity * 0.4})`
+                        : 'none'
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Progress Section */}
+          <div className="relative px-6 py-4 border-b border-primary/10">
+            <div className="mb-2 flex justify-between text-xs font-mono text-muted-foreground">
+              <span>{fmt(currentTime)}</span>
+              <span>-{fmt(remaining)}</span>
+            </div>
+            <div className="relative h-2 group cursor-pointer">
+              <div className="absolute inset-0 rounded-full bg-secondary/50 overflow-hidden">
+                <div 
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full transition-[width] duration-150 ease-linear" 
+                  style={{ width: `${progress * 100}%` }} 
+                />
+              </div>
+              <input 
+                aria-label="Seek" 
+                type="range" 
+                min={0} 
+                max={duration || 0} 
+                step={0.1} 
+                value={currentTime} 
+                onChange={(e)=>{ const val = Number(e.target.value); if(audioRef.current) audioRef.current.currentTime = val; setCurrentTime(val); }} 
+                className="absolute inset-0 w-full opacity-0 cursor-pointer" 
+              />
+            </div>
+          </div>
+
+          {/* Transport Controls */}
+          <div className="relative px-6 py-6 flex items-center justify-center gap-4">
+            <button 
+              aria-label="Previous" 
+              onClick={prev} 
+              className="h-12 w-12 rounded-full border border-primary/30 bg-secondary/50 flex items-center justify-center hover:border-primary hover:bg-primary/10 transition-all duration-300 racing-glow group"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:text-primary transition-colors">
+                <path d="M19 20L9 12l10-8v16Z"/>
+                <path d="M5 19V5"/>
+              </svg>
+            </button>
+            
+            <button 
+              aria-label={isPlaying ? 'Pause' : 'Play'} 
+              onClick={toggle} 
+              className="h-16 w-16 rounded-full border-2 border-primary bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center hover:from-primary/40 hover:to-accent/40 transition-all duration-300 shadow-[0_0_30px_rgba(33,150,243,0.4)] hover:shadow-[0_0_50px_rgba(33,150,243,0.6)] group"
+            >
+              {isPlaying ? (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-primary group-hover:scale-110 transition-transform">
+                  <rect x="6" y="4" width="4" height="16" rx="1"/>
+                  <rect x="14" y="4" width="4" height="16" rx="1"/>
+                </svg>
+              ) : (
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" className="text-primary group-hover:scale-110 transition-transform ml-1">
+                  <path d="M6 4v16l13-8-13-8Z" />
+                </svg>
+              )}
+            </button>
+            
+            <button 
+              aria-label="Next" 
+              onClick={next} 
+              className="h-12 w-12 rounded-full border border-primary/30 bg-secondary/50 flex items-center justify-center hover:border-primary hover:bg-primary/10 transition-all duration-300 racing-glow group"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:text-primary transition-colors">
+                <path d="M5 4l10 8-10 8V4Z"/>
+                <path d="M19 5v14"/>
+              </svg>
+            </button>
+          </div>
+
+          {/* Options */}
+          <div className="relative px-6 py-4 flex items-center justify-between border-t border-primary/10">
+            <button 
+              aria-label="Toggle Shuffle" 
+              onClick={() => setShuffle(s => !s)} 
+              className={`h-10 w-10 rounded-lg border flex items-center justify-center transition-all duration-300 ${
+                shuffle 
+                  ? 'border-primary bg-primary/20 text-primary shadow-[0_0_20px_rgba(33,150,243,0.3)]' 
+                  : 'border-primary/30 bg-secondary/30 text-muted-foreground hover:border-primary/50 hover:text-primary'
+              }`}
+            > 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 4h2v4" />
+                <path d="M4 4h5l5 8 3 4h3" />
+                <path d="M18 20h2v-4" />
+                <path d="M4 20h5l2.5-4" />
+              </svg>
+            </button>
+            
+            <button 
+              aria-label="Toggle Repeat" 
+              onClick={() => setRepeat(r => !r)} 
+              className={`h-10 w-10 rounded-lg border flex items-center justify-center transition-all duration-300 ${
+                repeat 
+                  ? 'border-primary bg-primary/20 text-primary shadow-[0_0_20px_rgba(33,150,243,0.3)]' 
+                  : 'border-primary/30 bg-secondary/30 text-muted-foreground hover:border-primary/50 hover:text-primary'
+              }`}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 1l4 4-4 4" />
+                <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+                <path d="M7 23l-4-4 4-4" />
+                <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Volume Control */}
+          <div className="relative px-6 py-4 border-t border-primary/10">
+            <div className="flex items-center gap-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground shrink-0">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+              </svg>
+              <div className="relative flex-1 h-2">
+                <div className="absolute inset-0 rounded-full bg-secondary/50 overflow-hidden">
+                  <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full" style={{ width: `${volume * 100}%` }} />
+                </div>
+                <input 
+                  aria-label="Volume" 
+                  type="range" 
+                  min={0} 
+                  max={1} 
+                  step={0.01} 
+                  value={volume} 
+                  onChange={(e)=>{ const v = Number(e.target.value); setVolume(v); if(audioRef.current) audioRef.current.volume = v; }} 
+                  className="absolute inset-0 w-full opacity-0 cursor-pointer" 
+                />
+              </div>
+              <span className="text-xs font-mono text-muted-foreground w-8 text-right">{Math.round(volume * 100)}</span>
+            </div>
+          </div>
+
+          {/* Track List */}
+          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1 custom-scrollbar">
+            <h4 className="text-xs uppercase tracking-wider text-muted-foreground px-2 mb-2">Playlist</h4>
+            {tracks.map((track, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setIndex(idx);
+                  if (!isPlaying) {
+                    setTimeout(() => play(), 100);
+                  }
+                }}
+                className={`w-full text-left p-2 rounded-lg transition-all duration-300 ${
+                  idx === index
+                    ? 'bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(33,150,243,0.2)]'
+                    : 'hover:bg-secondary/30 border border-transparent'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-mono w-6 ${idx === index ? 'text-primary' : 'text-muted-foreground'}`}>
+                    {idx === index && isPlaying ? '▶' : String(idx + 1).padStart(2, '0')}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-sm truncate ${idx === index ? 'text-white font-semibold' : 'text-muted-foreground'}`}>
+                      {track.title}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {error && (
+            <div className="px-6 py-2 border-t border-destructive/20 bg-destructive/10">
+              <p className="text-xs text-destructive">{error}</p>
+            </div>
+          )}
+
+          <audio
+            ref={audioRef}
+            src={current.src}
+            onLoadedMetadata={onLoaded}
+            onTimeUpdate={onTime}
+            onEnded={onEnded}
+            onError={onError}
+            preload="metadata"
+          />
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
+export default MusicPlayer;

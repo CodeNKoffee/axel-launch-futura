@@ -1,18 +1,40 @@
 import { useState, useEffect } from 'react';
 import { Github, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 import axelLogo from '@/assets/axel-logo.png';
 import racingBg1 from '@/assets/racing-bg-1.jpg';
 import racingBg2 from '@/assets/racing-bg-2.jpg';
+import { MusicPlayer } from '@/components/ui/music-player';
+import { F1StartingLights } from '@/components/F1StartingLights';
+
+const backgrounds = [racingBg1, racingBg2];
 
 const ComingSoon = () => {
+  const [showIntro, setShowIntro] = useState(true);
   const [currentBg, setCurrentBg] = useState(0);
-  const backgrounds = [racingBg1, racingBg2];
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBg((prev) => (prev + 1) % backgrounds.length);
     }, 8000); // Change background every 8 seconds
 
+    return () => clearInterval(interval);
+  }, []);
+
+  // Listen for music player state (check for audio playing in the page)
+  useEffect(() => {
+    const checkAudioPlaying = () => {
+      const audioElements = document.querySelectorAll('audio');
+      const anyPlaying = Array.from(audioElements).some(audio => !audio.paused);
+      setIsPlaying(anyPlaying);
+    };
+
+    const interval = setInterval(checkAudioPlaying, 500);
     return () => clearInterval(interval);
   }, []);
 
@@ -24,38 +46,75 @@ const ComingSoon = () => {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
-      {/* Dynamic Background Images */}
-      {backgrounds.map((bg, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-2000 ${
-            index === currentBg ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <img
-            src={bg}
-            alt="Racing background"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      ))}
+    <>
+      {/* F1 Starting Lights Intro */}
+      {showIntro && <F1StartingLights onComplete={handleIntroComplete} />}
+      
+      <div className="relative min-h-screen overflow-hidden bg-black">
+        {/* Dynamic Background Images */}
+        {backgrounds.map((bg, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-2000 ${
+              index === currentBg ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={bg}
+              alt="Racing background"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
 
-      {/* Overlay */}
-      <div className="absolute inset-0 hero-overlay" />
+        {/* Overlay */}
+        <div className="absolute inset-0 hero-overlay" />
 
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex flex-col">
+        {/* Music Player - starts collapsed */}
+        <MusicPlayer hidden={false} />
+
+        {/* Main Content */}
+        <div className="relative z-10 min-h-screen flex flex-col">
         {/* Hero Section */}
         <main className="flex-1 flex items-center justify-center px-6">
           <div className="text-center max-w-4xl mx-auto">
             {/* Logo */}
-            <div className="mb-8 fade-in">
-              <img
-                src={axelLogo}
-                alt="AXEL Logo"
-                className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 racing-glow"
-              />
+            <div className="mb-8 fade-in relative">
+              <motion.div
+                className="relative w-32 h-32 md:w-48 md:h-48 mx-auto mb-6"
+                initial={{
+                  filter: 'drop-shadow(0 0 20px rgba(33, 150, 243, 0.4)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.2))'
+                }}
+                animate={{
+                  filter: isPlaying
+                    ? [
+                        'drop-shadow(0 0 20px rgba(33, 150, 243, 0.6)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.4))',
+                        'drop-shadow(0 0 20px rgba(0, 188, 212, 0.6)) drop-shadow(0 0 40px rgba(0, 188, 212, 0.4))',
+                        'drop-shadow(0 0 20px rgba(76, 175, 80, 0.6)) drop-shadow(0 0 40px rgba(76, 175, 80, 0.4))',
+                        'drop-shadow(0 0 20px rgba(0, 188, 212, 0.6)) drop-shadow(0 0 40px rgba(0, 188, 212, 0.4))',
+                        'drop-shadow(0 0 20px rgba(33, 150, 243, 0.6)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.4))'
+                      ]
+                    : 'drop-shadow(0 0 20px rgba(33, 150, 243, 0.4)) drop-shadow(0 0 40px rgba(33, 150, 243, 0.2))'
+                }}
+                transition={
+                  isPlaying
+                    ? {
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }
+                    : {
+                        duration: 2,
+                        ease: "easeInOut"
+                      }
+                }
+              >
+                <img
+                  src={axelLogo}
+                  alt="AXEL Logo"
+                  className="w-full h-full"
+                />
+              </motion.div>
             </div>
 
             {/* Tagline */}
@@ -101,6 +160,7 @@ const ComingSoon = () => {
         </footer>
       </div>
     </div>
+    </>
   );
 };
 
