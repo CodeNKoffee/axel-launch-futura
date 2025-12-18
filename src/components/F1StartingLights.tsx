@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
-import axelLogo from '@/assets/axel-logo.png';
+import axelLogo from '@/assets/raven-logo.png';
 
 interface F1StartingLightsProps {
   onComplete: () => void;
@@ -47,7 +47,7 @@ export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }
               width: '200%',
             }}
             initial={{ x: '-100%', opacity: 0 }}
-            animate={{ 
+            animate={{
               x: '100%',
               opacity: [0, 0.4, 0]
             }}
@@ -66,7 +66,7 @@ export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }
       <motion.div
         className="relative z-10"
         initial={{ scale: 0.3, opacity: 0 }}
-        animate={{ 
+        animate={{
           scale: [0.3, 1.1, 1],
           opacity: [0, 1, 1]
         }}
@@ -106,7 +106,7 @@ export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }
         {/* Logo */}
         <motion.img
           src={axelLogo}
-          alt="AXEL"
+          alt="RAVEN"
           className="w-48 h-48 md:w-64 md:h-64 relative z-10"
           style={{
             filter: 'drop-shadow(0 0 40px rgba(33, 150, 243, 0.6))'
@@ -163,14 +163,14 @@ export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }
         }}
       >
         <div className="text-center flex flex-col items-center justify-center">
-          <motion.p 
+          <motion.p
             className="text-white/80 text-[0.65rem] leading-tight sm:text-sm md:text-base tracking-[0.05em] sm:tracking-[0.12em] md:tracking-[0.15em] font-light mb-2 sm:mb-3 italic max-w-full"
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             "The will to win is nothing without the will to prepare"
           </motion.p>
-          <motion.div 
+          <motion.div
             className="h-[1px] w-20 sm:w-32 md:w-40 bg-gradient-to-r from-transparent via-accent to-transparent"
             animate={{ scaleX: [0, 1, 1, 1, 0], opacity: [0, 1, 1, 1, 0] }}
             transition={{ duration: 5.5, ease: 'easeInOut' }}

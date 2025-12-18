@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* AXEL Racing Team Design System - Futuristic Racing Aesthetics */
+/* RAVEN Racing Team Design System - Futuristic Racing Aesthetics */
 
 @layer base {
   :root {
@@ -43,17 +43,17 @@
     --racing-green: 140 100% 50%;
     --racing-red: 0 100% 60%;
     --racing-yellow: 50 100% 60%;
-    
+
     /* Gradients */
     --gradient-racing: linear-gradient(135deg, hsl(var(--racing-blue)), hsl(var(--racing-green)));
     --gradient-hero: linear-gradient(180deg, hsl(0 0% 2% / 0.3), hsl(0 0% 2% / 0.8));
     --gradient-accent: linear-gradient(45deg, hsl(var(--racing-blue)), hsl(var(--racing-red)));
-    
+
     /* Shadows and glows */
     --shadow-racing: 0 0 30px hsl(var(--racing-blue) / 0.3);
     --shadow-accent: 0 0 20px hsl(var(--racing-green) / 0.4);
     --glow-text: 0 0 10px hsl(var(--racing-blue) / 0.6);
-    
+
     /* Animations */
     --transition-racing: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-glow: all 0.5s ease-in-out;
@@ -126,111 +126,108 @@
 }
 
 @layer components {
+
   /* Racing text effects */
   .text-glow {
     text-shadow: var(--glow-text);
   }
-  
+
   .gradient-text {
     background: var(--gradient-racing);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   /* Hero video overlay */
   .hero-overlay {
     background: var(--gradient-hero);
     backdrop-filter: blur(1px);
   }
-  
+
   /* Racing button effects */
   .racing-glow {
     box-shadow: var(--shadow-racing);
     transition: var(--transition-glow);
   }
-  
+
   .racing-glow:hover {
     box-shadow: var(--shadow-accent);
     transform: translateY(-2px);
   }
-  
+
   /* Pulse animation for coming soon */
   .pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite alternate;
   }
-  
+
   @keyframes pulse-glow {
     from {
       text-shadow: 0 0 5px hsl(var(--racing-blue) / 0.5);
     }
+
     to {
       text-shadow: 0 0 20px hsl(var(--racing-blue) / 0.8);
     }
   }
-  
+
   /* Smooth fade in animations */
   .fade-in {
     animation: fadeIn 1s ease-out;
   }
-  
+
   .fade-in-delay {
     animation: fadeIn 1s ease-out 0.5s both;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
       transform: translateY(20px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-  
+
   /* Custom Scrollbar for Music Player */
   .custom-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--primary) / 0.4) transparent;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 10px;
     margin: 8px 0;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      180deg,
-      hsl(var(--primary) / 0.6),
-      hsl(var(--accent) / 0.6)
-    );
+    background: linear-gradient(180deg,
+        hsl(var(--primary) / 0.6),
+        hsl(var(--accent) / 0.6));
     border-radius: 10px;
     border: 1px solid hsl(var(--primary) / 0.2);
     transition: all 0.3s ease;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      180deg,
-      hsl(var(--primary) / 0.9),
-      hsl(var(--accent) / 0.9)
-    );
+    background: linear-gradient(180deg,
+        hsl(var(--primary) / 0.9),
+        hsl(var(--accent) / 0.9));
     box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
     border-color: hsl(var(--primary) / 0.4);
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb:active {
-    background: linear-gradient(
-      180deg,
-      hsl(var(--primary)),
-      hsl(var(--accent))
-    );
+    background: linear-gradient(180deg,
+        hsl(var(--primary)),
+        hsl(var(--accent)));
   }
 }
