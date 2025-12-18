@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Instagram, Linkedin } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import axelLogo from '@/assets/raven-logo.png';
 import racingBg1 from '@/assets/racing-bg-1.jpg';
 import racingBg2 from '@/assets/racing-bg-2.jpg';
+import ambientVideo from '@/assets/AI Video Generation Bosch Future Mobility - Site.mp4';
 import { MusicPlayer } from '@/components/ui/music-player';
 import { F1StartingLights } from '@/components/F1StartingLights';
 
@@ -14,10 +15,33 @@ const ComingSoon = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [currentBg, setCurrentBg] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [videoVisible, setVideoVisible] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleIntroComplete = () => {
     setShowIntro(false);
   };
+
+  // Handle video replay with 10 second delay and fade effect
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleEnded = () => {
+      // Fade out
+      setVideoVisible(false);
+
+      setTimeout(() => {
+        video.currentTime = 0;
+        // Fade in and play
+        setVideoVisible(true);
+        video.play();
+      }, 10000); // 10 second delay before replay
+    };
+
+    video.addEventListener('ended', handleEnded);
+    return () => video.removeEventListener('ended', handleEnded);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,11 +75,25 @@ const ComingSoon = () => {
       {showIntro && <F1StartingLights onComplete={handleIntroComplete} />}
 
       <div className="relative min-h-screen overflow-hidden bg-black">
+        {/* Ambient Background Video - subtle, atmospheric layer */}
+        <div className={`absolute inset-0 z-0 transition-opacity duration-1000 ${videoVisible ? 'opacity-100' : 'opacity-0'}`}>
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            playsInline
+            className="w-full h-full object-cover blur-[1px] scale-105"
+            style={{ filter: 'saturate(0.8) brightness(0.6)' }}
+          >
+            <source src={ambientVideo} type="video/mp4" />
+          </video>
+        </div>
+
         {/* Dynamic Background Images */}
         {backgrounds.map((bg, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-2000 ${index === currentBg ? 'opacity-100' : 'opacity-0'
+            className={`absolute inset-0 z-[1] transition-opacity duration-2000 ${index === currentBg ? 'opacity-70' : 'opacity-0'
               }`}
           >
             <img
@@ -67,7 +105,7 @@ const ComingSoon = () => {
         ))}
 
         {/* Overlay */}
-        <div className="absolute inset-0 hero-overlay" />
+        <div className="absolute inset-0 z-[2] hero-overlay" />
 
         {/* Music Player - starts collapsed */}
         <MusicPlayer hidden={false} />
