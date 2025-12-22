@@ -64,9 +64,9 @@ const ComingSoon = () => {
   }, []);
 
   const socialLinks = [
-    { icon: Linkedin, href: 'https://linkedin.com/company/ravenguc', label: 'LinkedIn' },
-    { icon: Instagram, href: 'https://instagram.com/raven.guc', label: 'Instagram' },
-    { icon: SiTiktok, href: 'https://tiktok.com/@raven.guc', label: 'TikTok' },
+    { icon: Linkedin, href: 'https://linkedin.com/company/ravengp-ai', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://instagram.com/ravengp.ai', label: 'Instagram' },
+    // { icon: SiTiktok, href: 'https://tiktok.com/@raven.guc', label: 'TikTok' },
   ];
 
   return (
