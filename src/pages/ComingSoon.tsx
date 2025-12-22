@@ -155,8 +155,8 @@ const ComingSoon = () => {
               </div>
 
               {/* Tagline */}
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in gradient-text">
-                Racing into the Future
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in gradient-text racing-headline">
+                Intelligence Takes Flight
               </h1>
 
               {/* Coming Soon Notice */}
@@ -165,15 +165,16 @@ const ComingSoon = () => {
                   Launching Soon
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground">
-                  Full site coming Winter 2025
+                  2026 SEASON
                 </p>
               </div>
 
-              {/* Subtitle */}
-              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto fade-in-delay">
-                RAVEN (Robotic Autonomous Vehicle Engineering Network) is pushing the boundaries of
-                autonomous racing technology at the intersection of AI and motorsport.
-              </p>
+              {/* Constructor Bio */}
+              <div className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto fade-in-delay space-y-2">
+                <p className="text-xl md:text-2xl font-semibold text-white">RAVEN GP</p>
+                <p>Egypt's First Autonomous Constructor.</p>
+                <p>Official Entrant: <a href="https://boschfuturemobility.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline transition-colors">Bosch Future Mobility Challenge 2026</a>.</p>
+              </div>
             </div>
           </main>
 

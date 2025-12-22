@@ -230,4 +230,12 @@
         hsl(var(--primary)),
         hsl(var(--accent)));
   }
+
+  /* Racing Headline Typography */
+  .racing-headline {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
 }
