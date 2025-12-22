@@ -165,7 +165,7 @@ const ComingSoon = () => {
                   Launching Soon
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground">
-                  Full site coming Fall 2025
+                  Full site coming Winter 2025
                 </p>
               </div>
 
