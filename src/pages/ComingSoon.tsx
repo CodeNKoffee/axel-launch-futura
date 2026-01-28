@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, ChevronDown } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import axelLogo from '@/assets/raven-logo.png';
@@ -8,6 +8,13 @@ import racingBg2 from '@/assets/racing-bg-2.jpg';
 import ambientVideo from '@/assets/AI Video Generation Bosch Future Mobility - Site.mp4';
 import { MusicPlayer } from '@/components/ui/music-player';
 import { F1StartingLights } from '@/components/F1StartingLights';
+import {
+  RoadToAutonomous,
+  TechnicalGrid,
+  EngineeringScoreboard,
+  HardwareSpecs,
+  OurJourney,
+} from '@/components/sections';
 
 const backgrounds = [racingBg1, racingBg2];
 
@@ -155,19 +162,9 @@ const ComingSoon = () => {
               </div>
 
               {/* Tagline */}
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in gradient-text racing-headline">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 fade-in gradient-text racing-headline">
                 Intelligence Takes Flight
               </h1>
-
-              {/* Coming Soon Notice */}
-              <div className="mb-8 fade-in-delay">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-light mb-4 text-white pulse-glow">
-                  Launching Soon
-                </h2>
-                <p className="text-lg md:text-xl text-muted-foreground">
-                  2026 SEASON
-                </p>
-              </div>
 
               {/* Constructor Bio */}
               <div className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto fade-in-delay space-y-2">
@@ -178,26 +175,62 @@ const ComingSoon = () => {
             </div>
           </main>
 
-          {/* Footer */}
-          <footer className="relative z-10 py-8 px-6">
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-sm text-muted-foreground mb-6">Follow our journey</p>
-              <div className="flex justify-center space-x-8">
-                {socialLinks.map(({ icon: Icon, href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 racing-glow p-2 rounded-full hover:bg-secondary/20"
-                  >
-                    <Icon size={24} />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </footer>
+          {/* Scroll indicator - positioned at absolute bottom */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 0.8 }}
+            className="absolute bottom-8 left-0 right-0 z-20 flex justify-center"
+          >
+            <a
+              href="#road-to-autonomous"
+              className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.15em] text-white/70 hover:text-primary transition-colors duration-300"
+            >
+              Explore
+              <motion.span
+                animate={{ y: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <ChevronDown className="w-4 h-4" />
+              </motion.span>
+            </a>
+          </motion.div>
         </div>
       </div>
+
+      {/* Page Sections */}
+      <div id="road-to-autonomous">
+        <RoadToAutonomous />
+      </div>
+      <TechnicalGrid />
+      <EngineeringScoreboard />
+      <HardwareSpecs />
+      <OurJourney />
+
+      {/* Footer */}
+      <footer className="relative z-10 py-12 px-6 bg-black border-t border-white/5">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm text-muted-foreground mb-6">Follow our journey</p>
+          <div className="flex justify-center space-x-8 mb-8">
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="text-muted-foreground hover:text-primary transition-colors duration-300 racing-glow p-2 rounded-full hover:bg-secondary/20"
+              >
+                <Icon size={24} />
+              </a>
+            ))}
+          </div>
+          <div className="text-xs text-muted-foreground space-y-1">
+            <p>© 2026 RAVEN GP. Intelligence Takes Flight.</p>
+            <p>Official Entrant: Bosch Future Mobility Challenge 2026</p>
+          </div>
+        </div>
+      </footer>
     </>
   );
 };
