@@ -27,6 +27,43 @@ interface MediaItem {
 }
 
 const journeyMedia: MediaItem[] = [
+  // Nov 30, 2025 - First visit to DHL/Airport
+  {
+    type: 'image',
+    src: toAirport1,
+    caption: 'Journey to DHL Cargo Village at Cairo Airport',
+    date: 'Nov 30, 2025',
+    location: 'Cairo Airport',
+  },
+  {
+    type: 'video',
+    src: toAirportVideo1,
+    caption: 'En route to the cargo clearance facility',
+    date: 'Nov 30, 2025',
+    location: 'Cairo',
+  },
+  {
+    type: 'image',
+    src: toAirport2,
+    caption: 'Arriving at DHL area',
+    date: 'Nov 30, 2025',
+    location: 'DHL Cargo Village',
+  },
+  {
+    type: 'video',
+    src: cargoVillageVideo,
+    caption: 'Inside the DHL cargo area and customs authority',
+    date: 'Nov 30, 2025',
+    location: 'DHL Cargo Village',
+  },
+  {
+    type: 'image',
+    src: toAirport3,
+    caption: 'At the customs clearance facility',
+    date: 'Nov 30, 2025',
+    location: 'Cairo Airport Customs',
+  },
+  // Dec 29, 2025 - NTRA appeal
   {
     type: 'image',
     src: submissionLetter,
@@ -34,41 +71,7 @@ const journeyMedia: MediaItem[] = [
     date: 'Dec 29, 2025',
     location: 'NTRA Office',
   },
-  {
-    type: 'image',
-    src: toAirport1,
-    caption: 'Journey to DHL Cargo Village at Cairo Airport',
-    date: 'Nov 30, 2026',
-    location: 'Cairo Airport',
-  },
-  {
-    type: 'video',
-    src: toAirportVideo1,
-    caption: 'En route to the cargo clearance facility',
-    date: 'Nov 30, 2026',
-    location: 'Cairo',
-  },
-  {
-    type: 'image',
-    src: toAirport2,
-    caption: 'Arriving at DHL area',
-    date: 'Nov 30, 2026',
-    location: 'DHL Cargo Village',
-  },
-  {
-    type: 'video',
-    src: cargoVillageVideo,
-    caption: 'Inside the DHL cargo area and customs authority',
-    date: 'Nov 30, 2026',
-    location: 'DHL Cargo Village',
-  },
-  {
-    type: 'image',
-    src: toAirport3,
-    caption: 'At the customs clearance facility',
-    date: 'Nov 30, 2026',
-    location: 'Cairo Airport Customs',
-  },
+  // Jan 24, 2026 - NTRA approval
   {
     type: 'image',
     src: atCampus,
@@ -76,6 +79,7 @@ const journeyMedia: MediaItem[] = [
     date: 'Jan 24, 2026',
     location: 'GUC Campus',
   },
+  // Jan 26, 2026 - Final DHL paperwork
   {
     type: 'image',
     src: emptyDocs,

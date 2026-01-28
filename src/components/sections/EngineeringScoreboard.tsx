@@ -349,20 +349,20 @@ export const EngineeringScoreboard = () => {
             </div>
 
             {/* Summary stats */}
-            <div className="grid grid-cols-4 gap-3 mb-6 p-4 rounded-xl bg-black/30 border border-white/5">
-              <div className="text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 p-4 rounded-xl bg-black/30 border border-white/5">
+              <div className="text-center p-2">
                 <p className="text-2xl font-bold text-primary">78</p>
                 <p className="text-[10px] text-muted-foreground uppercase">Teams Selected</p>
               </div>
-              <div className="text-center border-x border-white/10">
+              <div className="text-center p-2">
                 <p className="text-2xl font-bold text-red-500">4</p>
                 <p className="text-[10px] text-muted-foreground uppercase">Rejections</p>
               </div>
-              <div className="text-center border-r border-white/10">
+              <div className="text-center p-2">
                 <p className="text-2xl font-bold text-yellow-500">63</p>
                 <p className="text-[10px] text-muted-foreground uppercase">Days Fought</p>
               </div>
-              <div className="text-center">
+              <div className="text-center p-2">
                 <p className="text-2xl font-bold text-green-500">1</p>
                 <p className="text-[10px] text-muted-foreground uppercase">Victory</p>
               </div>
