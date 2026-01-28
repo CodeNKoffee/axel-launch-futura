@@ -182,8 +182,11 @@ const ComingSoon = () => {
             transition={{ delay: 2, duration: 0.8 }}
             className="absolute bottom-8 left-0 right-0 z-20 flex justify-center"
           >
-            <a
-              href="#road-to-autonomous"
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('road-to-autonomous')?.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.15em] text-white/70 hover:text-primary transition-colors duration-300"
             >
               Explore
@@ -193,7 +196,7 @@ const ComingSoon = () => {
               >
                 <ChevronDown className="w-4 h-4" />
               </motion.span>
-            </a>
+            </button>
           </motion.div>
         </div>
       </div>

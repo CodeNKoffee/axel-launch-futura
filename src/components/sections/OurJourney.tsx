@@ -26,6 +26,16 @@ import hatemFindingSpot from '@/assets/our-journey/hatem-locating-a-place-to-sit
 import salmaFromCar from '@/assets/our-journey/salma-attedning-session-ofbrain-from-car.mp4';
 import teamPhoto from '@/assets/our-journey/the-team-takes-and-submits-team-photo.jpeg';
 
+// Aug 4, 2025 - Sushi hangout
+import casualWalk from '@/assets/our-journey/casual-walk-cuz-we-though-sushi-isnt-best-atm.jpeg';
+import debatingIkea from '@/assets/our-journey/debating-ikea-prices.jpeg';
+import parkedSushi from '@/assets/our-journey/parked-and-time-for-sushi-arrived-on-time.jpeg';
+import sushiHangout from '@/assets/our-journey/sushi-hangout-time.mp4';
+
+// Sep 25, 2025 - Team meets by coincidence
+import teamCoincidence from '@/assets/our-journey/raven-team-and-their-friends-meet-by coindeicen.mp4';
+import teamCoincidence2 from '@/assets/our-journey/raven-team-and-their-friends-meet-by coindeicen-2.mp4';
+
 interface MediaItem {
   type: 'image' | 'video';
   src: string;
@@ -35,6 +45,48 @@ interface MediaItem {
 }
 
 const journeyMedia: MediaItem[] = [
+  // Aug 4, 2025 - Sushi hangout
+  {
+    type: 'image',
+    src: parkedSushi,
+    caption: 'Parked and ready — sushi time, arrived right on time',
+    date: 'Aug 4, 2025',
+    location: 'Cairo',
+  },
+  {
+    type: 'image',
+    src: casualWalk,
+    caption: 'Casual walk because we thought sushi wasn\'t the best idea at first',
+    date: 'Aug 4, 2025',
+    location: 'Cairo',
+  },
+  {
+    type: 'image',
+    src: debatingIkea,
+    caption: 'Debating IKEA prices during the hangout',
+    date: 'Aug 4, 2025',
+    location: 'Cairo',
+  },
+  {
+    type: 'video',
+    src: sushiHangout,
+    caption: 'Sushi hangout time with the team',
+    date: 'Aug 4, 2025',
+    location: 'Cairo',
+  },
+  // Sep 25, 2025 - Team meets by coincidence
+  {
+    type: 'video',
+    src: teamCoincidence2,
+    caption: 'RAVEN team and friends meet by coincidence (Part 1)',
+    date: 'Sep 25, 2025',
+  },
+  {
+    type: 'video',
+    src: teamCoincidence,
+    caption: 'RAVEN team and friends meet by coincidence (Part 2)',
+    date: 'Sep 25, 2025',
+  },
   // Nov 30, 2025 - First visit to DHL/Airport
   {
     type: 'image',
@@ -192,7 +244,12 @@ export const OurJourney = () => {
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             The road to BFMC 2026 wasn't just code — it was customs documents,
-            airport runs, and never giving up. Here's our story.
+            airport runs, and unwavering belief. We started documenting our journey months before
+            even registering, because we knew we'd be part of this future, regardless of the odds.
+            <br />
+            <span className="text-sm text-primary/80 mt-2 block">
+              * English captions for videos will be available soon.
+            </span>
           </p>
         </motion.div>
 
@@ -207,7 +264,8 @@ export const OurJourney = () => {
           <p className="text-white/90 leading-relaxed">
             When our car was misclassified by customs as "vehicle spare parts" and rejected by NTRA,
             most teams would have panicked. We doubled down on our <strong className="text-primary">Simulation-First</strong> strategy.
-            While fighting bureaucracy, our digital twin kept evolving. The struggle made us stronger.
+            The dates below prove it — we were working and documenting long before valid registration.
+            While fighting bureaucracy, our digital twin kept evolving. The struggle didn't stop us; it defined us.
           </p>
         </motion.div>
 
