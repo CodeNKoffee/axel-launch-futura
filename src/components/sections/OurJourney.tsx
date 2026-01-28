@@ -4,10 +4,10 @@ import { X, Play, ChevronLeft, ChevronRight, MapPin, Calendar } from 'lucide-rea
 
 // Import all journey media
 import atCampus from '@/assets/our-journey/at-campus-day-of-ntra-approval.jpeg';
-import submissionLetter from '@/assets/our-journey/day-of submisison-letter-rectifying-ntra-appeal.jpeg';
+import submissionLetter from '@/assets/our-journey/day-of-submisison-letter-rectifying-ntra-appeal.png';
 import emptyDocs from '@/assets/our-journey/empty-dhl-legal-docs-returned-to-dhl-after-ntra-approval.jpeg';
-import submittingDocs1 from '@/assets/our-journey/submitting-dhl-legal-docs-returned-to-dhl-after-ntra-approval.jpeg';
-import submittingDocs2 from '@/assets/our-journey/submitting-dhl-legal-docs-returned-to-dhl-after-ntra-approval-2.jpeg';
+import submittingDocs1 from '@/assets/our-journey/submitting-dhl-legal-docs-returned-to-dhl-after-ntra-approval.png';
+import submittingDocs2 from '@/assets/our-journey/submitting-dhl-legal-docs-returned-to-dhl-after-ntra-approval-2.png';
 import toAirport1 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo-1.jpeg';
 import toAirport2 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo-2.jpeg';
 import toAirport3 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo-3.jpeg';
@@ -17,6 +17,14 @@ import cargoVillageVideo from '@/assets/our-journey/at-cargo-villiage-dhl-area-a
 import toAirportVideo1 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo.mp4';
 import toAirportVideo2 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo-2.mp4';
 import toAirportVideo3 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo-3.mp4';
+
+// Dec 8, 2025 - BFMC Workshop: Brain session
+import yasminBrainSession from '@/assets/our-journey/Yasmin-inside-the-BFMC Workshop-Brain-session.jpeg';
+import amrOutsideCold from '@/assets/our-journey/amr-taking-deep-breath in-the-cold-while-also-attending-from-outside.jpeg';
+import hatemRainsMeeting from '@/assets/our-journey/hatem-causllay-lisnteing-to-meeting-while-rains.mp4';
+import hatemFindingSpot from '@/assets/our-journey/hatem-locating-a-place-to-sit-for-the-meeting-while-rain-after-gym-on-mcapus.mp4';
+import salmaFromCar from '@/assets/our-journey/salma-attedning-session-ofbrain-from-car.mp4';
+import teamPhoto from '@/assets/our-journey/the-team-takes-and-submits-team-photo.jpeg';
 
 interface MediaItem {
   type: 'image' | 'video';
@@ -62,6 +70,49 @@ const journeyMedia: MediaItem[] = [
     caption: 'At the customs clearance facility',
     date: 'Nov 30, 2025',
     location: 'Cairo Airport Customs',
+  },
+  // Dec 8, 2025 - BFMC Workshop: Brain session (while fighting customs)
+  {
+    type: 'image',
+    src: teamPhoto,
+    caption: 'The team takes and submits their official team photo',
+    date: 'Dec 8, 2025',
+    location: 'GUC Campus',
+  },
+  {
+    type: 'image',
+    src: yasminBrainSession,
+    caption: 'Yasmin attending the BFMC Brain workshop session',
+    date: 'Dec 8, 2025',
+    location: 'Indoor',
+  },
+  {
+    type: 'image',
+    src: amrOutsideCold,
+    caption: 'Amr taking a deep breath in the cold while attending remotely',
+    date: 'Dec 8, 2025',
+    location: 'Outside',
+  },
+  {
+    type: 'video',
+    src: hatemFindingSpot,
+    caption: 'Hatem finding a spot to sit for the meeting after gym — in the rain',
+    date: 'Dec 8, 2025',
+    location: 'GUC Campus',
+  },
+  {
+    type: 'video',
+    src: hatemRainsMeeting,
+    caption: 'Hatem casually listening to the meeting while it rains on campus',
+    date: 'Dec 8, 2025',
+    location: 'GUC Campus',
+  },
+  {
+    type: 'video',
+    src: salmaFromCar,
+    caption: 'Salma attending the Brain session from the car',
+    date: 'Dec 8, 2025',
+    location: 'In Car',
   },
   // Dec 29, 2025 - NTRA appeal
   {
