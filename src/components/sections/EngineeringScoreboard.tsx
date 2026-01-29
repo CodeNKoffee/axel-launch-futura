@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Gauge, Truck, ChevronDown, ChevronUp, CheckCircle2, XCircle, Clock, FileCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Calculate days until March 9th, 2026
 const getCountdown = () => {
@@ -18,172 +19,6 @@ const getCountdown = () => {
   return { days, hours, minutes, seconds };
 };
 
-const timeline = [
-  // Competition Milestones
-  {
-    date: 'Oct 20, 2025',
-    event: 'Initial Inquiry to Bosch',
-    description: '15 detailed questions sent to BFMC team about hardware, funding, travel, and tech stack',
-    status: 'info',
-    type: 'competition',
-  },
-  {
-    date: 'Oct 21, 2025',
-    event: 'Bosch Responds',
-    description: 'All questions answered — green light to apply',
-    status: 'approved',
-    type: 'competition',
-  },
-  {
-    date: 'Nov 10, 2025',
-    event: 'BFMC Interview',
-    description: 'Team RAVEN presents to Bosch jury',
-    status: 'pending',
-    type: 'competition',
-  },
-  {
-    date: 'Nov 19, 2025',
-    event: 'Acceptance! 🎉',
-    description: 'Selected as 1 of 78 teams (from 163 applicants) — only team from Africa',
-    status: 'approved',
-    type: 'competition',
-  },
-  // Customs Battle Begins
-  {
-    date: 'Nov 27, 2025',
-    event: 'BFMC Kick-Off',
-    description: 'Official competition start — car shipped from Romania',
-    status: 'approved',
-    type: 'competition',
-  },
-  {
-    date: 'Nov 27, 2025',
-    event: 'Package Stuck in Customs',
-    description: 'Shipment held — misclassified as "vehicle spare parts"',
-    status: 'rejected',
-    type: 'customs',
-  },
-  {
-    date: 'Nov 27, 2025',
-    event: 'First DHL Contact',
-    description: 'Team explains it\'s a 1/10-scale educational prototype',
-    status: 'pending',
-    type: 'customs',
-  },
-  {
-    date: 'Nov 30, 2025',
-    event: 'Airport Visit #1',
-    description: 'Team visits Cairo Cargo Village with passports, supervisor letters, and IDs',
-    status: 'pending',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 2, 2025',
-    event: 'BoM Submitted',
-    description: 'Bill of Materials and Bosch documentation sent to NTRA',
-    status: 'info',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 8, 2025',
-    event: 'BFMC Workshop: Brain',
-    description: 'Technical discussion on Raspberry Pi integration (while fighting customs)',
-    status: 'info',
-    type: 'competition',
-  },
-  {
-    date: 'Dec 11, 2025',
-    event: 'False Hope',
-    description: 'Notification that shipment was "cleared" — celebration was premature',
-    status: 'pending',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 12, 2025',
-    event: 'NTRA Rejection',
-    description: 'Rejected citing "national security concerns" — a 1/10 scale toy car flagged as a threat',
-    status: 'rejected',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 12, 2025',
-    event: 'Emergency Intervention',
-    description: 'Team negotiates with DHL to hold shipment while pursuing independent appeal',
-    status: 'pending',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 16, 2025',
-    event: 'BFMC Workshop: Embedded',
-    description: 'Technical discussion on Nucleo integration (still no car)',
-    status: 'info',
-    type: 'competition',
-  },
-  {
-    date: 'Dec 17, 2025',
-    event: 'Stakeholder Engagement',
-    description: 'Team leverages university and industry contacts to reach NTRA decision-makers directly - leaving no stone unturned, andabing DHL channels',
-    status: 'pending',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 23, 2025',
-    event: 'Return Warning',
-    description: 'DHL warns shipment may be returned if not resolved soon',
-    status: 'rejected',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 25, 2025',
-    event: 'High-Level Support',
-    description: 'GUC President and senior faculty provide official letters vouching for educational purpose',
-    status: 'info',
-    type: 'customs',
-  },
-  {
-    date: 'Dec 29, 2025',
-    event: 'Document Lost',
-    description: 'NTRA POC out of office — soft copy lost in system',
-    status: 'rejected',
-    type: 'customs',
-  },
-  {
-    date: 'Jan 1, 2026',
-    event: 'ACID System Goes Live',
-    description: 'Egypt implements new blockchain import system — adds complexity',
-    status: 'info',
-    type: 'customs',
-  },
-  {
-    date: 'Jan 22, 2026',
-    event: 'Physical Submission',
-    description: 'Team submits all documents directly to NTRA in person',
-    status: 'pending',
-    type: 'customs',
-  },
-  {
-    date: 'Jan 24, 2026',
-    event: 'NTRA Approval! 🎉',
-    description: 'Decision rectified — clearance finally approved after 63 days',
-    status: 'approved',
-    type: 'customs',
-  },
-  {
-    date: 'Jan 26, 2026',
-    event: 'Final Documents',
-    description: 'Legal documents returned to DHL Service Point',
-    status: 'approved',
-    type: 'customs',
-  },
-  {
-    date: 'Jan 28, 2026',
-    event: 'Awaiting Release',
-    description: 'DHL confirms ready — standing by for delivery',
-    status: 'pending',
-    type: 'customs',
-  },
-];
-
 const getStatusIcon = (status: string) => {
   switch (status) {
     case 'approved':
@@ -198,6 +33,7 @@ const getStatusIcon = (status: string) => {
 };
 
 export const EngineeringScoreboard = () => {
+  const { t } = useTranslation();
   const [countdown, setCountdown] = useState(getCountdown());
   const [showTimeline, setShowTimeline] = useState(false);
 
@@ -207,6 +43,32 @@ export const EngineeringScoreboard = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const timelineEvents = [
+    { date: 'Oct 20, 2025', status: 'info', type: 'competition' },
+    { date: 'Oct 21, 2025', status: 'approved', type: 'competition' },
+    { date: 'Nov 10, 2025', status: 'pending', type: 'competition' },
+    { date: 'Nov 19, 2025', status: 'approved', type: 'competition' },
+    { date: 'Nov 27, 2025', status: 'approved', type: 'competition' },
+    { date: 'Nov 27, 2025', status: 'rejected', type: 'customs' },
+    { date: 'Nov 27, 2025', status: 'pending', type: 'customs' },
+    { date: 'Nov 30, 2025', status: 'pending', type: 'customs' },
+    { date: 'Dec 2, 2025', status: 'info', type: 'customs' },
+    { date: 'Dec 8, 2025', status: 'info', type: 'competition' },
+    { date: 'Dec 11, 2025', status: 'pending', type: 'customs' },
+    { date: 'Dec 12, 2025', status: 'rejected', type: 'customs' },
+    { date: 'Dec 12, 2025', status: 'pending', type: 'customs' },
+    { date: 'Dec 16, 2025', status: 'info', type: 'competition' },
+    { date: 'Dec 17, 2025', status: 'pending', type: 'customs' },
+    { date: 'Dec 23, 2025', status: 'rejected', type: 'customs' },
+    { date: 'Dec 25, 2025', status: 'info', type: 'customs' },
+    { date: 'Dec 29, 2025', status: 'rejected', type: 'customs' },
+    { date: 'Jan 1, 2026', status: 'info', type: 'customs' },
+    { date: 'Jan 22, 2026', status: 'pending', type: 'customs' },
+    { date: 'Jan 24, 2026', status: 'approved', type: 'customs' },
+    { date: 'Jan 26, 2026', status: 'approved', type: 'customs' },
+    { date: 'Jan 28, 2026', status: 'pending', type: 'customs' },
+  ];
 
   return (
     <section className="relative py-20 px-6 bg-gradient-to-b from-black to-[hsl(0,0%,3%)] overflow-hidden">
@@ -224,10 +86,10 @@ export const EngineeringScoreboard = () => {
           className="text-center mb-12"
         >
           <span className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4 block">
-            Mission Control
+            {t('engineeringScoreboard.missionControl')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-white racing-headline">
-            Engineering Scoreboard
+            {t('engineeringScoreboard.title')}
           </h2>
         </motion.div>
 
@@ -246,22 +108,22 @@ export const EngineeringScoreboard = () => {
                 <Calendar className="w-5 h-5 text-primary" />
               </div>
               <span className="text-sm text-muted-foreground uppercase tracking-wider">
-                Days to Qualification
+                {t('engineeringScoreboard.countdown.daysTo')}
               </span>
             </div>
-            <div className="flex items-baseline gap-1">
+            <div className="flex items-baseline gap-1 rtl:flex-row-reverse">
               <span className="text-5xl font-bold text-white racing-headline">
                 {countdown.days}
               </span>
-              <span className="text-xl text-muted-foreground">days</span>
+              <span className="text-xl text-muted-foreground">{t('engineeringScoreboard.time.days')}</span>
             </div>
-            <div className="flex gap-4 mt-3 text-sm text-muted-foreground">
-              <span>{countdown.hours}h</span>
-              <span>{countdown.minutes}m</span>
-              <span>{countdown.seconds}s</span>
+            <div className="flex gap-4 mt-3 text-sm text-muted-foreground rtl:flex-row-reverse">
+              <span>{countdown.hours}{t('engineeringScoreboard.time.hours')}</span>
+              <span>{countdown.minutes}{t('engineeringScoreboard.time.minutes')}</span>
+              <span>{countdown.seconds}{t('engineeringScoreboard.time.seconds')}</span>
             </div>
             <p className="text-xs text-muted-foreground mt-3">
-              March 9th, 2026 — Qualification Round
+              {t('engineeringScoreboard.countdown.qualificationRound')}
             </p>
           </div>
 
@@ -272,11 +134,11 @@ export const EngineeringScoreboard = () => {
                 <Gauge className="w-5 h-5 text-accent" />
               </div>
               <span className="text-sm text-muted-foreground uppercase tracking-wider">
-                Development Phase
+                {t('engineeringScoreboard.devPhase.label')}
               </span>
             </div>
             <p className="text-2xl font-bold text-white mb-2">
-              Simulation & Integration
+              {t('engineeringScoreboard.devPhase.simulation')}
             </p>
             <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
               <motion.div
@@ -288,7 +150,7 @@ export const EngineeringScoreboard = () => {
               />
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              65% — Preparing for hardware integration
+              {t('engineeringScoreboard.devPhase.preparing')}
             </p>
           </div>
 
@@ -299,21 +161,21 @@ export const EngineeringScoreboard = () => {
                 <Truck className="w-5 h-5 text-yellow-500" />
               </div>
               <span className="text-sm text-muted-foreground uppercase tracking-wider">
-                Car Status
+                {t('engineeringScoreboard.carStatus.label')}
               </span>
             </div>
             <p className="text-xl font-bold text-white mb-1">
-              Customs Cleared
+              {t('engineeringScoreboard.carStatus.customsCleared')}
             </p>
             <p className="text-sm text-green-500 flex items-center gap-2 mb-3">
               <CheckCircle2 className="w-4 h-4" />
-              NTRA Approved
+              {t('engineeringScoreboard.carStatus.ntraApproved')}
             </p>
             <button
               onClick={() => setShowTimeline(!showTimeline)}
               className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
             >
-              View Timeline
+              {t('engineeringScoreboard.viewTimeline')}
               {showTimeline ? (
                 <ChevronUp className="w-4 h-4" />
               ) : (
@@ -337,14 +199,14 @@ export const EngineeringScoreboard = () => {
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
               <div className="flex items-center gap-3">
                 <h4 className="text-lg font-semibold text-white">
-                  The 3-Month Journey
+                  {t('engineeringScoreboard.timeline.title')}
                 </h4>
                 <span className="text-[10px] px-2 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 font-semibold">
-                  🌍 Only Team from Africa
+                  🌍 {t('engineeringScoreboard.timeline.onlyAfrican')}
                 </span>
               </div>
               <span className="text-xs text-muted-foreground px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                {timeline.length} events
+                {timelineEvents.length} {t('engineeringScoreboard.timeline.events')}
               </span>
             </div>
 
@@ -352,19 +214,19 @@ export const EngineeringScoreboard = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 p-4 rounded-xl bg-black/30 border border-white/5">
               <div className="text-center p-2">
                 <p className="text-2xl font-bold text-primary">78</p>
-                <p className="text-[10px] text-muted-foreground uppercase">Teams Selected</p>
+                <p className="text-[10px] text-muted-foreground uppercase">{t('engineeringScoreboard.timeline.stats.teamsSelected')}</p>
               </div>
               <div className="text-center p-2">
                 <p className="text-2xl font-bold text-red-500">4</p>
-                <p className="text-[10px] text-muted-foreground uppercase">Rejections</p>
+                <p className="text-[10px] text-muted-foreground uppercase">{t('engineeringScoreboard.timeline.stats.rejections')}</p>
               </div>
               <div className="text-center p-2">
                 <p className="text-2xl font-bold text-yellow-500">63</p>
-                <p className="text-[10px] text-muted-foreground uppercase">Days Fought</p>
+                <p className="text-[10px] text-muted-foreground uppercase">{t('engineeringScoreboard.timeline.stats.daysFought')}</p>
               </div>
               <div className="text-center p-2">
                 <p className="text-2xl font-bold text-green-500">1</p>
-                <p className="text-[10px] text-muted-foreground uppercase">Victory</p>
+                <p className="text-[10px] text-muted-foreground uppercase">{t('engineeringScoreboard.timeline.stats.victory')}</p>
               </div>
             </div>
 
@@ -372,18 +234,18 @@ export const EngineeringScoreboard = () => {
             <div className="flex gap-4 mb-4 text-[10px]">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-primary"></span>
-                <span className="text-muted-foreground">Competition</span>
+                <span className="text-muted-foreground">{t('engineeringScoreboard.timeline.legend.competition')}</span>
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
-                <span className="text-muted-foreground">Customs Battle</span>
+                <span className="text-muted-foreground">{t('engineeringScoreboard.timeline.legend.customs')}</span>
               </span>
             </div>
 
             {/* Scrollable timeline */}
             <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
               <div className="space-y-3">
-                {timeline.map((item, index) => (
+                {timelineEvents.map((item, index) => (
                   <div
                     key={index}
                     className={`flex gap-4 p-3 rounded-lg transition-colors ${item.status === 'approved' ? 'bg-green-500/10 border border-green-500/20' :
@@ -393,7 +255,7 @@ export const EngineeringScoreboard = () => {
                   >
                     <div className="flex flex-col items-center shrink-0">
                       {getStatusIcon(item.status)}
-                      {index < timeline.length - 1 && (
+                      {index < timelineEvents.length - 1 && (
                         <div className={`w-px flex-1 mt-2 ${item.status === 'approved' ? 'bg-green-500/30' :
                           item.status === 'rejected' ? 'bg-red-500/30' :
                             'bg-white/10'
@@ -423,10 +285,10 @@ export const EngineeringScoreboard = () => {
                         )}
                       </div>
                       <p className="text-sm font-medium text-white mt-1">
-                        {item.event}
+                        {t(`engineeringScoreboard.events.${index}.event`)}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        {item.description}
+                        {t(`engineeringScoreboard.events.${index}.description`)}
                       </p>
                     </div>
                   </div>
@@ -437,18 +299,13 @@ export const EngineeringScoreboard = () => {
             {/* Bottom note */}
             <div className="mt-4 pt-4 border-t border-white/5 space-y-3">
               <p className="text-sm text-white text-center font-medium">
-                Never give up. The car is coming. 🏎️
+                {t('engineeringScoreboard.timeline.footer')} 🏎️
               </p>
               <p className="text-[11px] text-muted-foreground text-center leading-relaxed max-w-2xl mx-auto">
-                A 1/10 scale educational RC car — initially flagged by customs as "vehicle spare parts," then
-                escalated to NTRA review as a "national security concern" under Egypt's strict counter-terrorism
-                regulations on autonomous and remote-controlled technology. What followed
-                was 63 days of daily phone calls, email threads at all hours, airport visits, and leveraging
-                every university and industry connection we had. From the GUC President to senior faculty
-                to direct engagement with NTRA officials — we left no stone unturned.
+                {t('engineeringScoreboard.timeline.footerDesc')}
               </p>
               <p className="text-[10px] text-primary/80 text-center font-medium">
-                Proud to be the only African team — also representing the Arab world and Middle East. 🌍
+                {t('engineeringScoreboard.timeline.footerBadge')} 🌍
               </p>
             </div>
           </div>

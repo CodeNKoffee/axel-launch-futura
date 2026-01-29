@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, ChevronLeft, ChevronRight, MapPin, Calendar } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Import all journey media
 import atCampus from '@/assets/our-journey/at-campus-day-of-ntra-approval.jpeg';
@@ -39,173 +40,174 @@ import teamCoincidence2 from '@/assets/our-journey/raven-team-and-their-friends-
 interface MediaItem {
   type: 'image' | 'video';
   src: string;
-  caption: string;
+  captionKey: string;
   date: string;
-  location?: string;
+  locationKey?: string;
 }
 
-const journeyMedia: MediaItem[] = [
+const journeyMediaRaw = [
   // Aug 4, 2025 - Sushi hangout
   {
     type: 'image',
     src: parkedSushi,
-    caption: 'Parked and ready — sushi time, arrived right on time',
+    captionKey: '0',
     date: 'Aug 4, 2025',
-    location: 'Cairo',
+    locationKey: '0',
   },
   {
     type: 'image',
     src: casualWalk,
-    caption: 'Casual walk because we thought sushi wasn\'t the best idea at first',
+    captionKey: '1',
     date: 'Aug 4, 2025',
-    location: 'Cairo',
+    locationKey: '1',
   },
   {
     type: 'image',
     src: debatingIkea,
-    caption: 'Debating IKEA prices during the hangout',
+    captionKey: '2',
     date: 'Aug 4, 2025',
-    location: 'Cairo',
+    locationKey: '2',
   },
   {
     type: 'video',
     src: sushiHangout,
-    caption: 'Sushi hangout time with the team',
+    captionKey: '3',
     date: 'Aug 4, 2025',
-    location: 'Cairo',
+    locationKey: '3',
   },
   // Sep 25, 2025 - Team meets by coincidence
   {
     type: 'video',
     src: teamCoincidence2,
-    caption: 'RAVEN team and friends meet by coincidence (Part 1)',
+    captionKey: '4',
     date: 'Sep 25, 2025',
   },
   {
     type: 'video',
     src: teamCoincidence,
-    caption: 'RAVEN team and friends meet by coincidence (Part 2)',
+    captionKey: '5',
     date: 'Sep 25, 2025',
   },
   // Nov 30, 2025 - First visit to DHL/Airport
   {
     type: 'image',
     src: toAirport1,
-    caption: 'Journey to DHL Cargo Village at Cairo Airport',
+    captionKey: '6',
     date: 'Nov 30, 2025',
-    location: 'Cairo Airport',
+    locationKey: '6',
   },
   {
     type: 'video',
     src: toAirportVideo1,
-    caption: 'En route to the cargo clearance facility',
+    captionKey: '7',
     date: 'Nov 30, 2025',
-    location: 'Cairo',
+    locationKey: '7',
   },
   {
     type: 'image',
     src: toAirport2,
-    caption: 'Arriving at DHL area',
+    captionKey: '8',
     date: 'Nov 30, 2025',
-    location: 'DHL Cargo Village',
+    locationKey: '8',
   },
   {
     type: 'video',
     src: cargoVillageVideo,
-    caption: 'Inside the DHL cargo area and customs authority',
+    captionKey: '9',
     date: 'Nov 30, 2025',
-    location: 'DHL Cargo Village',
+    locationKey: '9',
   },
   {
     type: 'image',
     src: toAirport3,
-    caption: 'At the customs clearance facility',
+    captionKey: '10',
     date: 'Nov 30, 2025',
-    location: 'Cairo Airport Customs',
+    locationKey: '10',
   },
   // Dec 8, 2025 - BFMC Workshop: Brain session (while fighting customs)
   {
     type: 'image',
     src: teamPhoto,
-    caption: 'The team takes and submits their official team photo',
+    captionKey: '11',
     date: 'Dec 8, 2025',
-    location: 'GUC Campus',
+    locationKey: '11',
   },
   {
     type: 'image',
     src: yasminBrainSession,
-    caption: 'Yasmin attending the BFMC Brain workshop session',
+    captionKey: '12',
     date: 'Dec 8, 2025',
-    location: 'Indoor',
+    locationKey: '12',
   },
   {
     type: 'image',
     src: amrOutsideCold,
-    caption: 'Amr taking a deep breath in the cold while attending remotely',
+    captionKey: '13',
     date: 'Dec 8, 2025',
-    location: 'Outside',
+    locationKey: '13',
   },
   {
     type: 'video',
     src: hatemFindingSpot,
-    caption: 'Hatem finding a spot to sit for the meeting after gym — in the rain',
+    captionKey: '14',
     date: 'Dec 8, 2025',
-    location: 'GUC Campus',
+    locationKey: '14',
   },
   {
     type: 'video',
     src: hatemRainsMeeting,
-    caption: 'Hatem casually listening to the meeting while it rains on campus',
+    captionKey: '15',
     date: 'Dec 8, 2025',
-    location: 'GUC Campus',
+    locationKey: '15',
   },
   {
     type: 'video',
     src: salmaFromCar,
-    caption: 'Salma attending the Brain session from the car',
+    captionKey: '16',
     date: 'Dec 8, 2025',
-    location: 'In Car',
+    locationKey: '16',
   },
   // Dec 29, 2025 - NTRA appeal
   {
     type: 'image',
     src: submissionLetter,
-    caption: 'Submitting the appeal letter to rectify NTRA decision',
+    captionKey: '17',
     date: 'Dec 29, 2025',
-    location: 'NTRA Office',
+    locationKey: '17',
   },
   // Jan 24, 2026 - NTRA approval
   {
     type: 'image',
     src: atCampus,
-    caption: 'Day of NTRA approval — celebrating on campus',
+    captionKey: '18',
     date: 'Jan 24, 2026',
-    location: 'GUC Campus',
+    locationKey: '18',
   },
   // Jan 26, 2026 - Final DHL paperwork
   {
     type: 'image',
     src: emptyDocs,
-    caption: 'Submitted legal documents for DHL to finalize clearance',
+    captionKey: '19',
     date: 'Jan 26, 2026',
   },
   {
     type: 'image',
     src: submittingDocs1,
-    caption: 'Submitting final documents to DHL Service Point',
+    captionKey: '20',
     date: 'Jan 26, 2026',
-    location: 'DHL Service Point',
+    locationKey: '20',
   },
   {
     type: 'image',
     src: submittingDocs2,
-    caption: 'Final clearance paperwork submitted',
+    captionKey: '21',
     date: 'Jan 26, 2026',
-    location: 'DHL Service Point',
+    locationKey: '21',
   },
 ];
 
 export const OurJourney = () => {
+  const { t } = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const openLightbox = (index: number) => setSelectedIndex(index);
@@ -213,14 +215,14 @@ export const OurJourney = () => {
 
   const goNext = () => {
     if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex + 1) % journeyMedia.length);
+      setSelectedIndex((selectedIndex + 1) % journeyMediaRaw.length);
     }
   };
 
   const goPrev = () => {
     if (selectedIndex !== null) {
       setSelectedIndex(
-        (selectedIndex - 1 + journeyMedia.length) % journeyMedia.length
+        (selectedIndex - 1 + journeyMediaRaw.length) % journeyMediaRaw.length
       );
     }
   };
@@ -237,18 +239,16 @@ export const OurJourney = () => {
           className="text-center mb-4"
         >
           <span className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4 block">
-            Behind The Scenes
+            {t('ourJourney.subtitle')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-white racing-headline mb-4">
-            Our Journey
+            {t('ourJourney.title')}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-            The road to BFMC 2026 wasn't just code — it was customs documents,
-            airport runs, and unwavering belief. We started documenting our journey months before
-            even registering, because we knew we'd be part of this future, regardless of the odds.
+            {t('ourJourney.description')}
             <br />
             <span className="text-sm text-primary/80 mt-2 block">
-              * English captions for videos will be available soon.
+              {t('ourJourney.note')}
             </span>
           </p>
         </motion.div>
@@ -262,10 +262,7 @@ export const OurJourney = () => {
           className="max-w-3xl mx-auto mb-12 p-6 rounded-2xl bg-gradient-to-r from-primary/10 to-transparent border-l-4 border-primary"
         >
           <p className="text-white/90 leading-relaxed">
-            When our car was misclassified by customs as "vehicle spare parts" and rejected by NTRA,
-            most teams would have panicked. We doubled down on our <strong className="text-primary">Simulation-First</strong> strategy.
-            The dates below prove it — we were working and documenting long before valid registration.
-            While fighting bureaucracy, our digital twin kept evolving. The struggle didn't stop us; it defined us.
+            {t('ourJourney.story')}
           </p>
         </motion.div>
 
@@ -277,7 +274,7 @@ export const OurJourney = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         >
-          {journeyMedia.map((item, index) => (
+          {journeyMediaRaw.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -291,7 +288,7 @@ export const OurJourney = () => {
               {item.type === 'image' ? (
                 <img
                   src={item.src}
-                  alt={item.caption}
+                  alt={t(`ourJourney.media.${item.captionKey}.caption`)}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               ) : (
@@ -320,7 +317,7 @@ export const OurJourney = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-3">
                   <p className="text-white text-xs font-medium line-clamp-2">
-                    {item.caption}
+                    {t(`ourJourney.media.${item.captionKey}.caption`)}
                   </p>
                   <p className="text-white/60 text-[10px] mt-1">{item.date}</p>
                 </div>
@@ -378,15 +375,15 @@ export const OurJourney = () => {
               className="max-w-4xl w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              {journeyMedia[selectedIndex].type === 'image' ? (
+              {journeyMediaRaw[selectedIndex].type === 'image' ? (
                 <img
-                  src={journeyMedia[selectedIndex].src}
-                  alt={journeyMedia[selectedIndex].caption}
+                  src={journeyMediaRaw[selectedIndex].src}
+                  alt={t(`ourJourney.media.${journeyMediaRaw[selectedIndex].captionKey}.caption`)}
                   className="w-full max-h-[70vh] object-contain rounded-lg"
                 />
               ) : (
                 <video
-                  src={journeyMedia[selectedIndex].src}
+                  src={journeyMediaRaw[selectedIndex].src}
                   className="w-full max-h-[70vh] object-contain rounded-lg"
                   controls
                   autoPlay
@@ -396,17 +393,17 @@ export const OurJourney = () => {
               {/* Caption */}
               <div className="mt-4 text-center">
                 <p className="text-white text-lg font-medium">
-                  {journeyMedia[selectedIndex].caption}
+                  {t(`ourJourney.media.${journeyMediaRaw[selectedIndex].captionKey}.caption`)}
                 </p>
                 <div className="flex items-center justify-center gap-4 mt-2 text-sm text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
-                    {journeyMedia[selectedIndex].date}
+                    {journeyMediaRaw[selectedIndex].date}
                   </span>
-                  {journeyMedia[selectedIndex].location && (
+                  {journeyMediaRaw[selectedIndex].locationKey && (
                     <span className="flex items-center gap-1">
                       <MapPin className="w-4 h-4" />
-                      {journeyMedia[selectedIndex].location}
+                      {t(`ourJourney.media.${journeyMediaRaw[selectedIndex].locationKey}.location`)}
                     </span>
                   )}
                 </div>
@@ -414,7 +411,7 @@ export const OurJourney = () => {
 
               {/* Counter */}
               <p className="text-center text-muted-foreground text-sm mt-4">
-                {selectedIndex + 1} / {journeyMedia.length}
+                {selectedIndex + 1} / {journeyMediaRaw.length}
               </p>
             </motion.div>
           </motion.div>

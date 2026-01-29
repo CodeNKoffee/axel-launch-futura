@@ -1,93 +1,95 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Car, Cpu, Microchip, Zap, Camera, Compass, Battery, Cable, Clock } from 'lucide-react';
-
-const specs = [
-  {
-    icon: Car,
-    name: 'Chassis',
-    model: 'Reely TC-04',
-    detail: '1/10 Scale On-Road',
-    status: 'ready',
-  },
-  {
-    icon: Cpu,
-    name: 'Brain',
-    model: 'Raspberry Pi 5',
-    detail: '8GB RAM — Main SoC',
-    status: 'ready',
-  },
-  {
-    icon: Microchip,
-    name: 'Controller',
-    model: 'Nucleo F401RE',
-    detail: 'STM32 — Motor & Sensors',
-    status: 'ready',
-  },
-  {
-    icon: Zap,
-    name: 'Motor',
-    model: 'Quickrun Fusion SE',
-    detail: '1200KV Brushless + ESC',
-    status: 'ready',
-  },
-  {
-    icon: Camera,
-    name: 'Camera',
-    model: 'RPi Camera Module 3',
-    detail: 'Wide-Angle Monocular',
-    status: 'ready',
-  },
-  {
-    icon: Compass,
-    name: 'IMU',
-    model: 'Custom IMU Board',
-    detail: '9-DOF — Accel/Gyro/Mag',
-    status: 'ready',
-  },
-  {
-    icon: Battery,
-    name: 'Battery',
-    model: '2S LiPo (Pending)',
-    detail: 'Expected: 4500-6200 mAh',
-    status: 'pending',
-  },
-  {
-    icon: Cable,
-    name: 'Powerboard',
-    model: 'Custom PCB',
-    detail: 'Dual Battery, 9/12/18V',
-    status: 'ready',
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0, 0, 0.2, 1] as const,
-    },
-  },
-};
+import { useTranslation } from 'react-i18next';
 
 export const HardwareSpecs = () => {
+  const { t } = useTranslation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const specs = [
+    {
+      icon: Car,
+      name: t('hardwareSpecs.specs.chassis.name'),
+      model: 'Reely TC-04',
+      detail: t('hardwareSpecs.specs.chassis.detail'),
+      status: 'ready',
+    },
+    {
+      icon: Cpu,
+      name: t('hardwareSpecs.specs.brain.name'),
+      model: 'Raspberry Pi 5',
+      detail: t('hardwareSpecs.specs.brain.detail'),
+      status: 'ready',
+    },
+    {
+      icon: Microchip,
+      name: t('hardwareSpecs.specs.controller.name'),
+      model: 'Nucleo F401RE',
+      detail: t('hardwareSpecs.specs.controller.detail'),
+      status: 'ready',
+    },
+    {
+      icon: Zap,
+      name: t('hardwareSpecs.specs.motor.name'),
+      model: 'Quickrun Fusion SE',
+      detail: t('hardwareSpecs.specs.motor.detail'),
+      status: 'ready',
+    },
+    {
+      icon: Camera,
+      name: t('hardwareSpecs.specs.camera.name'),
+      model: 'RPi Camera Module 3',
+      detail: t('hardwareSpecs.specs.camera.detail'),
+      status: 'ready',
+    },
+    {
+      icon: Compass,
+      name: t('hardwareSpecs.specs.imu.name'),
+      model: 'Custom IMU Board',
+      detail: t('hardwareSpecs.specs.imu.detail'),
+      status: 'ready',
+    },
+    {
+      icon: Battery,
+      name: t('hardwareSpecs.specs.battery.name'),
+      model: t('hardwareSpecs.specs.battery.model'),
+      detail: t('hardwareSpecs.specs.battery.detail'),
+      status: 'pending',
+    },
+    {
+      icon: Cable,
+      name: t('hardwareSpecs.specs.powerboard.name'),
+      model: 'Custom PCB',
+      detail: t('hardwareSpecs.specs.powerboard.detail'),
+      status: 'ready',
+    },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0, 0, 0.2, 1] as const,
+      },
+    },
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -132,13 +134,13 @@ export const HardwareSpecs = () => {
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4 block">
-            Vehicle Specifications
+            {t('hardwareSpecs.subtitle')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-white racing-headline mb-4">
-            Hardware Specs
+            {t('hardwareSpecs.title')}
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            The anatomy of our autonomous athlete — precision components working in harmony.
+            {t('hardwareSpecs.description')}
           </p>
         </motion.div>
 
@@ -193,7 +195,7 @@ export const HardwareSpecs = () => {
                       {isPending && (
                         <span className="flex items-center gap-1 px-2 py-0.5 text-[10px] rounded-full bg-yellow-500/20 text-yellow-500 border border-yellow-500/30">
                           <Clock className="w-3 h-3" />
-                          Pending
+                          {t('hardwareSpecs.pending')}
                         </span>
                       )}
                     </div>
@@ -253,7 +255,7 @@ export const HardwareSpecs = () => {
                   }}
                 >
                   <span className="text-[10px] text-primary font-bold uppercase tracking-wider">
-                    Drag
+                    {t('hardwareSpecs.drag')}
                   </span>
                 </motion.div>
               )}

@@ -1,0 +1,343 @@
+{
+  "common": {
+    "explore": "Explore",
+    "loading": "Loading...",
+    "readMore": "Read more",
+    "back": "Back"
+  },
+  "nav": {
+    "home": "Home",
+    "team": "Team",
+    "journey": "Our Journey",
+    "specs": "Specs"
+  },
+  "intro": {
+    "quote": "The will to win is nothing without the will to prepare"
+  },
+  "hero": {
+    "title": "Intelligence Takes Flight",
+    "teamName": "RAVEN GP",
+    "subtitle": "Egypt's First Autonomous Constructor.",
+    "officialEntrant": "Official Entrant:",
+    "bfmc": "Bosch Future Mobility Challenge 2026"
+  },
+  "roadToAutonomous": {
+    "pipeline": "Engineering Pipeline",
+    "title": "Road to Autonomous",
+    "subtitle": "Our simulation-first approach ensures every algorithm is battle-tested before deployment.",
+    "steps": {
+      "0": {
+        "title": "The Digital Twin (Gazebo)",
+        "description": "We build and test every line of code in a simulated \"Smart City\" before it ever touches a wheel."
+      },
+      "1": {
+        "title": "The Brain-Spine Handshake",
+        "description": "Our custom Serial Protocol ensures the logic (Python) and the reflexes (C++) are perfectly synchronized."
+      },
+      "2": {
+        "title": "Sim-to-Real Deployment",
+        "description": "The moment the car arrives, we transfer our 90% tested software onto the physical Reely TC-04 chassis."
+      }
+    }
+  },
+  "technicalGrid": {
+    "architecture": "Team Architecture",
+    "title": "Eyes, Spine, Brain",
+    "subtitle": "Our 15-member workforce operates like a precision F1 pit crew — each module specialized, all synchronized.",
+    "cards": {
+      "perception": {
+        "name": "Perception",
+        "subtitle": "The Eyes",
+        "responsibility": "Lane detection, Sign recognition, and IPM mapping."
+      },
+      "embedded": {
+        "name": "Embedded",
+        "subtitle": "The Spine",
+        "responsibility": "PID Control, Motor PWM, and Serial Parsing."
+      },
+      "integration": {
+        "name": "Integration",
+        "subtitle": "The Brain",
+        "responsibility": "Finite State Machines and UI Telemetry."
+      }
+    }
+  },
+  "engineeringScoreboard": {
+    "missionControl": "Mission Control",
+    "title": "Engineering Scoreboard",
+    "countdown": {
+      "daysTo": "Days to Qualification",
+      "qualificationRound": "March 9th, 2026 — Qualification Round"
+    },
+    "devPhase": {
+      "label": "Development Phase",
+      "simulation": "Simulation & Integration",
+      "preparing": "65% — Preparing for hardware integration"
+    },
+    "carStatus": {
+      "label": "Car Status",
+      "customsCleared": "Customs Cleared",
+      "ntraApproved": "NTRA Approved"
+    },
+    "time": {
+      "days": "days",
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "viewTimeline": "View Timeline",
+    "timeline": {
+      "title": "The 3-Month Journey",
+      "onlyAfrican": "Only Team from Africa",
+      "events": "events",
+      "stats": {
+        "teamsSelected": "Teams Selected",
+        "rejections": "Rejections",
+        "daysFought": "Days Fought",
+        "victory": "Victory"
+      },
+      "legend": {
+        "competition": "Competition",
+        "customs": "Customs Battle"
+      },
+      "footer": "Never give up. The car is coming.",
+      "footerDesc": "A 1/10 scale educational RC car — initially flagged by customs as \"vehicle spare parts,\" then escalated to NTRA review as a \"national security concern\" under Egypt's strict counter-terrorism regulations on autonomous and remote-controlled technology. What followed was 63 days of daily phone calls, email threads at all hours, airport visits, and leveraging every university and industry connection we had. From the GUC President to senior faculty to direct engagement with NTRA officials — we left no stone unturned.",
+      "footerBadge": "Proud to be the only African team — also representing the Arab world and Middle East."
+    },
+    "events": {
+      "0": {
+        "event": "Initial Inquiry to Bosch",
+        "description": "15 detailed questions sent to BFMC team about hardware, funding, travel, and tech stack"
+      },
+      "1": {
+        "event": "Bosch Responds",
+        "description": "All questions answered — green light to apply"
+      },
+      "2": {
+        "event": "BFMC Interview",
+        "description": "Team RAVEN presents to Bosch jury"
+      },
+      "3": {
+        "event": "Acceptance! 🎉",
+        "description": "Selected as 1 of 78 teams (from 163 applicants) — only team from Africa"
+      },
+      "4": {
+        "event": "BFMC Kick-Off",
+        "description": "Official competition start — car shipped from Romania"
+      },
+      "5": {
+        "event": "Package Stuck in Customs",
+        "description": "Shipment held — misclassified as \"vehicle spare parts\""
+      },
+      "6": {
+        "event": "First DHL Contact",
+        "description": "Team explains it's a 1/10-scale educational prototype"
+      },
+      "7": {
+        "event": "Airport Visit #1",
+        "description": "Team visits Cairo Cargo Village with passports, supervisor letters, and IDs"
+      },
+      "8": {
+        "event": "BoM Submitted",
+        "description": "Bill of Materials and Bosch documentation sent to NTRA"
+      },
+      "9": {
+        "event": "BFMC Workshop: Brain",
+        "description": "Technical discussion on Raspberry Pi integration (while fighting customs)"
+      },
+      "10": {
+        "event": "False Hope",
+        "description": "Notification that shipment was \"cleared\" — celebration was premature"
+      },
+      "11": {
+        "event": "NTRA Rejection",
+        "description": "Rejected citing \"national security concerns\" — a 1/10 scale toy car flagged as a threat"
+      },
+      "12": {
+        "event": "Emergency Intervention",
+        "description": "Team negotiates with DHL to hold shipment while pursuing independent appeal"
+      },
+      "13": {
+        "event": "BFMC Workshop: Embedded",
+        "description": "Technical discussion on Nucleo integration (still no car)"
+      },
+      "14": {
+        "event": "Stakeholder Engagement",
+        "description": "Team leverages university and industry contacts to reach NTRA decision-makers directly - leaving no stone unturned, andabing DHL channels"
+      },
+      "15": {
+        "event": "Return Warning",
+        "description": "DHL warns shipment may be returned if not resolved soon"
+      },
+      "16": {
+        "event": "High-Level Support",
+        "description": "GUC President and senior faculty provide official letters vouching for educational purpose"
+      },
+      "17": {
+        "event": "Document Lost",
+        "description": "NTRA POC out of office — soft copy lost in system"
+      },
+      "18": {
+        "event": "ACID System Goes Live",
+        "description": "Egypt implements new blockchain import system — adds complexity"
+      },
+      "19": {
+        "event": "Physical Submission",
+        "description": "Team submits all documents directly to NTRA in person"
+      },
+      "20": {
+        "event": "NTRA Approval! 🎉",
+        "description": "Decision rectified — clearance finally approved after 63 days"
+      },
+      "21": {
+        "event": "Final Documents",
+        "description": "Legal documents returned to DHL Service Point"
+      },
+      "22": {
+        "event": "Awaiting Release",
+        "description": "DHL confirms ready — standing by for delivery"
+      }
+    }
+  },
+  "hardwareSpecs": {
+    "title": "Hardware Specs",
+    "subtitle": "Vehicle Specifications",
+    "description": "The anatomy of our autonomous athlete — precision components working in harmony.",
+    "pending": "Pending",
+    "drag": "Drag",
+    "specs": {
+      "chassis": {
+        "name": "Chassis",
+        "detail": "1/10 Scale On-Road"
+      },
+      "brain": {
+        "name": "Brain",
+        "detail": "8GB RAM — Main SoC"
+      },
+      "controller": {
+        "name": "Controller",
+        "detail": "STM32 — Motor & Sensors"
+      },
+      "motor": {
+        "name": "Motor",
+        "detail": "1200KV Brushless + ESC"
+      },
+      "camera": {
+        "name": "Camera",
+        "detail": "Wide-Angle Monocular"
+      },
+      "imu": {
+        "name": "IMU",
+        "detail": "9-DOF — Accel/Gyro/Mag"
+      },
+      "battery": {
+        "name": "Battery",
+        "model": "2S LiPo (Pending)",
+        "detail": "Expected: 4500-6200 mAh"
+      },
+      "powerboard": {
+        "name": "Powerboard",
+        "detail": "Dual Battery, 9/12/18V"
+      }
+    }
+  },
+  "ourJourney": {
+    "title": "Our Journey",
+    "subtitle": "Behind The Scenes",
+    "description": "The road to BFMC 2026 wasn't just code — it was customs documents, airport runs, and unwavering belief. We started documenting our journey months before even registering, because we knew we'd be part of this future, regardless of the odds.",
+    "note": "* English captions for videos will be available soon.",
+    "story": "When our car was misclassified by customs as \"vehicle spare parts\" and rejected by NTRA, most teams would have panicked. We doubled down on our Simulation-First strategy. The dates below prove it — we were working and documenting long before valid registration. While fighting bureaucracy, our digital twin kept evolving. The struggle didn't stop us; it defined us.",
+    "media": {
+      "0": {
+        "caption": "Parked and ready — sushi time, arrived right on time",
+        "location": "Cairo"
+      },
+      "1": {
+        "caption": "Casual walk because we thought sushi wasn't the best idea at first",
+        "location": "Cairo"
+      },
+      "2": {
+        "caption": "Debating IKEA prices during the hangout",
+        "location": "Cairo"
+      },
+      "3": {
+        "caption": "Sushi hangout time with the team",
+        "location": "Cairo"
+      },
+      "4": {
+        "caption": "RAVEN team and friends meet by coincidence (Part 1)"
+      },
+      "5": {
+        "caption": "RAVEN team and friends meet by coincidence (Part 2)"
+      },
+      "6": {
+        "caption": "Journey to DHL Cargo Village at Cairo Airport",
+        "location": "Cairo Airport"
+      },
+      "7": {
+        "caption": "En route to the cargo clearance facility",
+        "location": "Cairo"
+      },
+      "8": {
+        "caption": "Arriving at DHL area",
+        "location": "DHL Cargo Village"
+      },
+      "9": {
+        "caption": "Inside the DHL cargo area and customs authority",
+        "location": "DHL Cargo Village"
+      },
+      "10": {
+        "caption": "At the customs clearance facility",
+        "location": "Cairo Airport Customs"
+      },
+      "11": {
+        "caption": "The team takes and submits their official team photo",
+        "location": "GUC Campus"
+      },
+      "12": {
+        "caption": "Yasmin attending the BFMC Brain workshop session",
+        "location": "Indoor"
+      },
+      "13": {
+        "caption": "Amr taking a deep breath in the cold while attending remotely",
+        "location": "Outside"
+      },
+      "14": {
+        "caption": "Hatem finding a spot to sit for the meeting after gym — in the rain",
+        "location": "GUC Campus"
+      },
+      "15": {
+        "caption": "Hatem casually listening to the meeting while it rains on campus",
+        "location": "GUC Campus"
+      },
+      "16": {
+        "caption": "Salma attending the Brain session from the car",
+        "location": "In Car"
+      },
+      "17": {
+        "caption": "Submitting the appeal letter to rectify NTRA decision",
+        "location": "NTRA Office"
+      },
+      "18": {
+        "caption": "Day of NTRA approval — celebrating on campus",
+        "location": "GUC Campus"
+      },
+      "19": {
+        "caption": "Submitted legal documents for DHL to finalize clearance"
+      },
+      "20": {
+        "caption": "Submitting final documents to DHL Service Point",
+        "location": "DHL Service Point"
+      },
+      "21": {
+        "caption": "Final clearance paperwork submitted",
+        "location": "DHL Service Point"
+      }
+    }
+  },
+  "footer": {
+    "followUs": "Follow our journey",
+    "rights": "© 2026 RAVEN GP. Intelligence Takes Flight.",
+    "officialEntrant": "Official Entrant: Bosch Future Mobility Challenge 2026"
+  }
+}

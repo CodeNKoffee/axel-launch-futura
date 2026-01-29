@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Instagram, Linkedin, ChevronDown } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
 import { motion } from 'framer-motion';
@@ -19,6 +20,7 @@ import {
 const backgrounds = [racingBg1, racingBg2];
 
 const ComingSoon = () => {
+  const { t, i18n } = useTranslation();
   const [showIntro, setShowIntro] = useState(true);
   const [currentBg, setCurrentBg] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -118,7 +120,7 @@ const ComingSoon = () => {
         <MusicPlayer hidden={false} />
 
         {/* Main Content */}
-        <div className="relative z-10 min-h-screen flex flex-col">
+        <div key={i18n.language} className="relative z-10 min-h-screen flex flex-col">
           {/* Hero Section */}
           <main className="flex-1 flex items-center justify-center px-6">
             <div className="text-center max-w-4xl mx-auto">
@@ -162,15 +164,15 @@ const ComingSoon = () => {
               </div>
 
               {/* Tagline */}
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 fade-in gradient-text racing-headline">
-                Intelligence Takes Flight
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 fade-in gradient-text racing-headline rtl:tracking-normal ltr:tracking-wide">
+                {t('hero.title')}
               </h1>
 
               {/* Constructor Bio */}
               <div className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto fade-in-delay space-y-2">
-                <p className="text-xl md:text-2xl font-semibold text-white">RAVEN GP</p>
-                <p>Egypt's First Autonomous Constructor.</p>
-                <p>Official Entrant: <a href="https://boschfuturemobility.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline transition-colors">Bosch Future Mobility Challenge 2026</a>.</p>
+                <p className="text-xl md:text-2xl font-semibold text-white">{t('hero.teamName')}</p>
+                <p>{t('hero.subtitle')}</p>
+                <p>{t('hero.officialEntrant')} <a href="https://boschfuturemobility.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline transition-colors">{t('hero.bfmc')}</a>.</p>
               </div>
             </div>
           </main>
@@ -187,9 +189,9 @@ const ComingSoon = () => {
                 e.preventDefault();
                 document.getElementById('road-to-autonomous')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.15em] text-white/70 hover:text-primary transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.15em] text-white/70 hover:text-primary transition-colors duration-300 rtl:flex-row-reverse"
             >
-              Explore
+              {t('common.explore')}
               <motion.span
                 animate={{ y: [0, 4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -202,19 +204,21 @@ const ComingSoon = () => {
       </div>
 
       {/* Page Sections */}
-      <div id="road-to-autonomous">
-        <RoadToAutonomous />
+      <div key={`sections-${i18n.language}`} className="space-y-0">
+        <div id="road-to-autonomous">
+          <RoadToAutonomous />
+        </div>
+        <TechnicalGrid />
+        <EngineeringScoreboard />
+        <HardwareSpecs />
+        <OurJourney />
       </div>
-      <TechnicalGrid />
-      <EngineeringScoreboard />
-      <HardwareSpecs />
-      <OurJourney />
 
       {/* Footer */}
       <footer className="relative z-10 py-12 px-6 bg-black border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground mb-6">Follow our journey</p>
-          <div className="flex justify-center space-x-8 mb-8">
+          <p className="text-sm text-muted-foreground mb-6">{t('footer.followUs')}</p>
+          <div className="flex justify-center gap-8 mb-8">
             {socialLinks.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
@@ -229,8 +233,8 @@ const ComingSoon = () => {
             ))}
           </div>
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>© 2026 RAVEN GP. Intelligence Takes Flight.</p>
-            <p>Official Entrant: Bosch Future Mobility Challenge 2026</p>
+            <p>{t('footer.rights')}</p>
+            <p>{t('footer.officialEntrant')}</p>
           </div>
         </div>
       </footer>

@@ -7,7 +7,10 @@ interface F1StartingLightsProps {
   onComplete: () => void;
 }
 
+import { useTranslation } from 'react-i18next';
+
 export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }) => {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -164,11 +167,11 @@ export const F1StartingLights: React.FC<F1StartingLightsProps> = ({ onComplete }
       >
         <div className="text-center flex flex-col items-center justify-center">
           <motion.p
-            className="text-white/80 text-[0.65rem] leading-tight sm:text-sm md:text-base tracking-[0.05em] sm:tracking-[0.12em] md:tracking-[0.15em] font-light mb-2 sm:mb-3 italic max-w-full"
+            className="text-white/80 text-[0.65rem] leading-tight sm:text-sm md:text-base tracking-[0.05em] sm:tracking-[0.12em] md:tracking-[0.15em] font-light mb-2 sm:mb-3 italic max-w-full rtl:font-normal rtl:not-italic"
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            "The will to win is nothing without the will to prepare"
+            "{t('intro.quote')}"
           </motion.p>
           <motion.div
             className="h-[1px] w-20 sm:w-32 md:w-40 bg-gradient-to-r from-transparent via-accent to-transparent"

@@ -1,60 +1,63 @@
 import { motion } from 'framer-motion';
 import { Eye, Cpu, Brain } from 'lucide-react';
-
-const modules = [
-  {
-    icon: Eye,
-    name: 'Perception',
-    subtitle: 'The Eyes',
-    responsibility: 'Lane detection, Sign recognition, and IPM mapping.',
-    stack: ['OpenCV', 'Python', 'Gazebo'],
-    color: 'from-cyan-500 to-blue-500',
-    glowColor: 'rgba(6, 182, 212, 0.3)',
-  },
-  {
-    icon: Cpu,
-    name: 'Embedded',
-    subtitle: 'The Spine',
-    responsibility: 'PID Control, Motor PWM, and Serial Parsing.',
-    stack: ['C++', 'mbed OS', 'STM32'],
-    color: 'from-green-500 to-emerald-500',
-    glowColor: 'rgba(34, 197, 94, 0.3)',
-  },
-  {
-    icon: Brain,
-    name: 'Integration',
-    subtitle: 'The Brain',
-    responsibility: 'Finite State Machines and UI Telemetry.',
-    stack: ['Python FSM', 'WebSockets'],
-    color: 'from-purple-500 to-pink-500',
-    glowColor: 'rgba(168, 85, 247, 0.3)',
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: [0, 0, 0.2, 1] as const,
-    },
-  },
-};
+import { useTranslation } from 'react-i18next';
 
 export const TechnicalGrid = () => {
+  const { t } = useTranslation();
+
+  const modules = [
+    {
+      icon: Eye,
+      name: t('technicalGrid.cards.perception.name'),
+      subtitle: t('technicalGrid.cards.perception.subtitle'),
+      responsibility: t('technicalGrid.cards.perception.responsibility'),
+      stack: ['OpenCV', 'Python', 'Gazebo'],
+      color: 'from-cyan-500 to-blue-500',
+      glowColor: 'rgba(6, 182, 212, 0.3)',
+    },
+    {
+      icon: Cpu,
+      name: t('technicalGrid.cards.embedded.name'),
+      subtitle: t('technicalGrid.cards.embedded.subtitle'),
+      responsibility: t('technicalGrid.cards.embedded.responsibility'),
+      stack: ['C++', 'mbed OS', 'STM32'],
+      color: 'from-green-500 to-emerald-500',
+      glowColor: 'rgba(34, 197, 94, 0.3)',
+    },
+    {
+      icon: Brain,
+      name: t('technicalGrid.cards.integration.name'),
+      subtitle: t('technicalGrid.cards.integration.subtitle'),
+      responsibility: t('technicalGrid.cards.integration.responsibility'),
+      stack: ['Python FSM', 'WebSockets'],
+      color: 'from-purple-500 to-pink-500',
+      glowColor: 'rgba(168, 85, 247, 0.3)',
+    },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0, 0, 0.2, 1] as const,
+      },
+    },
+  };
+
   return (
     <section className="relative py-24 px-6 bg-black overflow-hidden">
       {/* Ambient background glow */}
@@ -70,13 +73,13 @@ export const TechnicalGrid = () => {
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4 block">
-            Team Architecture
+            {t('technicalGrid.architecture')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-white racing-headline mb-4">
-            Eyes, Spine, Brain
+            {t('technicalGrid.title')}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Our 15-member workforce operates like a precision F1 pit crew — each module specialized, all synchronized.
+            {t('technicalGrid.subtitle')}
           </p>
         </motion.div>
 

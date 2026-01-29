@@ -1,0 +1,343 @@
+{
+  "common": {
+    "explore": "Explorează",
+    "loading": "Se încarcă...",
+    "readMore": "Citește mai mult",
+    "back": "Înapoi"
+  },
+  "nav": {
+    "home": "Acasă",
+    "team": "Echipa",
+    "journey": "Călătoria Noastră",
+    "specs": "Specificații"
+  },
+  "intro": {
+    "quote": "Voința de a câștiga nu înseamnă nimic fără voința de a te pregăti"
+  },
+  "hero": {
+    "title": "Inteligența Își Ia Zborul",
+    "teamName": "RAVEN GP",
+    "subtitle": "Primul Constructor Autonom din Egipt.",
+    "officialEntrant": "Participant Oficial:",
+    "bfmc": "Bosch Future Mobility Challenge 2026"
+  },
+  "roadToAutonomous": {
+    "pipeline": "Conducta de Inginerie",
+    "title": "Drumul către Autonomie",
+    "subtitle": "Abordarea noastră 'simulation-first' asigură că fiecare algoritm este testat înainte de implementare.",
+    "steps": {
+      "0": {
+        "title": "Geamănul Digital (Gazebo)",
+        "description": "Construim și testăm fiecare linie de cod într-un 'Smart City' simulat înainte de a atinge o roată."
+      },
+      "1": {
+        "title": "Strângerea de mână Creier-Coloană",
+        "description": "Protocolul nostru Serial personalizat asigură sincronizarea perfectă între logică (Python) și reflexe (C++)."
+      },
+      "2": {
+        "title": "Implementare Sim-to-Real",
+        "description": "În momentul în care mașina sosește, transferăm software-ul testat în proporție de 90% pe șasiul fizic Reely TC-04."
+      }
+    }
+  },
+  "technicalGrid": {
+    "architecture": "Arhitectura Echipei",
+    "title": "Ochi, Coloană, Creier",
+    "subtitle": "Forța noastră de muncă de 15 membri operează ca o echipă de pit stop F1 — fiecare modul specializat, toate sincronizate.",
+    "cards": {
+      "perception": {
+        "name": "Percepție",
+        "subtitle": "Ochii",
+        "responsibility": "Detecția benzilor, recunoașterea semnelor și maparea IPM."
+      },
+      "embedded": {
+        "name": "Embedded",
+        "subtitle": "Coloana",
+        "responsibility": "Control PID, Motor PWM și Parsare Serială."
+      },
+      "integration": {
+        "name": "Integrare",
+        "subtitle": "Creierul",
+        "responsibility": "Mașini cu Stări Finite și Telemetrie UI."
+      }
+    }
+  },
+  "engineeringScoreboard": {
+    "missionControl": "Controlul Misiunii",
+    "title": "Tabel de Bord Ingineresc",
+    "countdown": {
+      "daysTo": "Zile până la Calificare",
+      "qualificationRound": "9 Martie 2026 — Runda de Calificare"
+    },
+    "devPhase": {
+      "label": "Faza de Dezvoltare",
+      "simulation": "Simulare & Integrare",
+      "preparing": "65% — Pregătire pentru integrarea hardware"
+    },
+    "carStatus": {
+      "label": "Status Mașină",
+      "customsCleared": "Vămuire Completă",
+      "ntraApproved": "Aprobat NTRA"
+    },
+    "time": {
+      "days": "zile",
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "viewTimeline": "Vezi Cronologia",
+    "timeline": {
+      "title": "Călătoria de 3 Luni",
+      "onlyAfrican": "Singura Echipă din Africa",
+      "events": "evenimente",
+      "stats": {
+        "teamsSelected": "Echipe Selectate",
+        "rejections": "Respingeri",
+        "daysFought": "Zile de Luptă",
+        "victory": "Victorie"
+      },
+      "legend": {
+        "competition": "Competiție",
+        "customs": "Lupta Vamală"
+      },
+      "footer": "Nu renunța niciodată. Mașina vine.",
+      "footerDesc": "O mașină RC educațională la scara 1/10 — marcată inițial de vamă ca 'piese de schimb auto', apoi escaladată la NTRA ca 'problemă de securitate națională'. Ceea ce a urmat au fost 63 de zile de apeluri telefonice zilnice, email-uri la orice oră și vizite la autorități.",
+      "footerBadge": "Mândri să fim singura echipă africană — reprezentând și lumea arabă și Orientul Mijlociu."
+    },
+    "events": {
+      "0": {
+        "event": "Întrebare Inițială către Bosch",
+        "description": "15 întrebări detaliate trimise echipei BFMC hardware, finanțare și tech stack"
+      },
+      "1": {
+        "event": "Răspuns Bosch",
+        "description": "Toate întrebările au primit răspuns — undă verde pentru aplicare"
+      },
+      "2": {
+        "event": "Interviu BFMC",
+        "description": "Echipa RAVEN prezintă în fața juriului Bosch"
+      },
+      "3": {
+        "event": "Acceptare! 🎉",
+        "description": "Selectați ca una dintre cele 78 de echipe (din 163) — singura echipă din Africa"
+      },
+      "4": {
+        "event": "BFMC Kick-Off",
+        "description": "Start oficial — mașina expediată din România"
+      },
+      "5": {
+        "event": "Pachet Blocat în Vamă",
+        "description": "Expediere reținută — clasificată greșit ca 'piese de schimb auto'"
+      },
+      "6": {
+        "event": "Primul Contact DHL",
+        "description": "Echipa explică faptul că este un prototip educațional scara 1/10"
+      },
+      "7": {
+        "event": "Vizită Aeroport #1",
+        "description": "Echipa vizitează Cargo Village Cairo cu pașapoarte și acte"
+      },
+      "8": {
+        "event": "BoM Trimis",
+        "description": "Lista de materiale și documentația Bosch trimise la NTRA"
+      },
+      "9": {
+        "event": "Workshop BFMC: Brain",
+        "description": "Discuție tehnică despre integrarea Raspberry Pi (în timp ce luptăm cu vama)"
+      },
+      "10": {
+        "event": "Speranță Falsă",
+        "description": "Notificare că expedierea a fost 'vămuită' — sărbătoare prematură"
+      },
+      "11": {
+        "event": "Respingere NTRA",
+        "description": "Respins citând 'securitate națională' — o mașină de jucărie 1/10 marcată ca amenințare"
+      },
+      "12": {
+        "event": "Intervenție de Urgență",
+        "description": "Echipa negociază cu DHL păstrarea pachetului în timpul apelului independent"
+      },
+      "13": {
+        "event": "Workshop BFMC: Embedded",
+        "description": "Discuție tehnică despre integrarea Nucleo (încă fără mașină)"
+      },
+      "14": {
+        "event": "Implicarea Stakeholderilor",
+        "description": "Echipa folosește contactele universitare pentru a ajunge la decidenții NTRA"
+      },
+      "15": {
+        "event": "Avertisment Retur",
+        "description": "DHL avertizează că pachetul poate fi returnat dacă nu se rezolvă curând"
+      },
+      "16": {
+        "event": "Suport la Nivel Înalt",
+        "description": "Președintele GUC și profesorii seniori oferă scrisori oficiale"
+      },
+      "17": {
+        "event": "Document Pierdut",
+        "description": "POC NTRA indisponibil — copie digitală pierdută în sistem"
+      },
+      "18": {
+        "event": "Sistemul ACID Activ",
+        "description": "Egipt implementează noul sistem blockchain de import — adaugă complexitate"
+      },
+      "19": {
+        "event": "Depunere Fizică",
+        "description": "Echipa depune toate documentele direct la NTRA personal"
+      },
+      "20": {
+        "event": "Aprobare NTRA! 🎉",
+        "description": "Decizie rectificată — vămuire aprobată final după 63 de zile"
+      },
+      "21": {
+        "event": "Documente Finale",
+        "description": "Documente legale returnate la punctul DHL"
+      },
+      "22": {
+        "event": "În Așteptarea Eliberării",
+        "description": "DHL confirmă că totul e gata — așteptăm livrarea"
+      }
+    }
+  },
+  "hardwareSpecs": {
+    "title": "Specificații Hardware",
+    "subtitle": "Specificații Vehicul",
+    "description": "Anatomia atletului nostru autonom — componente de precizie lucrând în armonie.",
+    "pending": "În așteptare",
+    "drag": "Trage",
+    "specs": {
+      "chassis": {
+        "name": "Șasiu",
+        "detail": "Scara 1/10 On-Road"
+      },
+      "brain": {
+        "name": "Creier",
+        "detail": "8GB RAM — SoC Principal"
+      },
+      "controller": {
+        "name": "Controler",
+        "detail": "STM32 — Motor & Senzori"
+      },
+      "motor": {
+        "name": "Motor",
+        "detail": "1200KV Brushless + ESC"
+      },
+      "camera": {
+        "name": "Cameră",
+        "detail": "Monocular Unghi Larg"
+      },
+      "imu": {
+        "name": "IMU",
+        "detail": "9-DOF — Accel/Gyro/Mag"
+      },
+      "battery": {
+        "name": "Baterie",
+        "model": "2S LiPo (În așteptare)",
+        "detail": "Așteptat: 4500-6200 mAh"
+      },
+      "powerboard": {
+        "name": "Placă Alimentare",
+        "detail": "Baterie Dublă, 9/12/18V"
+      }
+    }
+  },
+  "ourJourney": {
+    "title": "Călătoria Noastră",
+    "subtitle": "În Culise",
+    "description": "Drumul către BFMC 2026 nu a fost doar cod — au fost documente vamale, drumuri la aeroport și credință neclintită. Am început să documentăm călătoria cu luni înainte de înregistrare.",
+    "note": "* Subtitrările în engleză pentru videoclipuri vor fi disponibile în curând.",
+    "story": "Când mașina noastră a fost clasificată greșit de vamă ca 'piese auto' și respinsă de NTRA, majoritatea echipelor ar fi intrat în panică. Noi am dublat strategia Simulation-First. Datele de mai jos o demonstrează.",
+    "media": {
+      "0": {
+        "caption": "Parcați și pregătiți — timp de sushi",
+        "location": "Cairo"
+      },
+      "1": {
+        "caption": "Plimbare casuală",
+        "location": "Cairo"
+      },
+      "2": {
+        "caption": "Dezbatere despre prețurile IKEA",
+        "location": "Cairo"
+      },
+      "3": {
+        "caption": "Timp de sushi cu echipa",
+        "location": "Cairo"
+      },
+      "4": {
+        "caption": "Echipa RAVEN și prietenii se întâlnesc (Partea 1)"
+      },
+      "5": {
+        "caption": "Echipa RAVEN și prietenii se întâlnesc (Partea 2)"
+      },
+      "6": {
+        "caption": "Călătorie la DHL Cargo Village",
+        "location": "Aeroportul Cairo"
+      },
+      "7": {
+        "caption": "În drum spre facilitatea de vămuire",
+        "location": "Cairo"
+      },
+      "8": {
+        "caption": "Sosire în zona DHL",
+        "location": "DHL Cargo Village"
+      },
+      "9": {
+        "caption": "În interiorul zonei de cargo DHL",
+        "location": "DHL Cargo Village"
+      },
+      "10": {
+        "caption": "La facilitatea de vămuire",
+        "location": "Vama Aeroportului Cairo"
+      },
+      "11": {
+        "caption": "Echipa își face fotografia oficială",
+        "location": "Campus GUC"
+      },
+      "12": {
+        "caption": "Yasmin participă la workshop-ul Brain",
+        "location": "Interior"
+      },
+      "13": {
+        "caption": "Amr respirând adânc în frig",
+        "location": "Exterior"
+      },
+      "14": {
+        "caption": "Hatem caută un loc pentru întâlnire — în ploaie",
+        "location": "Campus GUC"
+      },
+      "15": {
+        "caption": "Hatem ascultă întâlnirea în ploaie",
+        "location": "Campus GUC"
+      },
+      "16": {
+        "caption": "Salma participă la sesiunea Brain din mașină",
+        "location": "În mașină"
+      },
+      "17": {
+        "caption": "Depunerea scrisorii de apel la NTRA",
+        "location": "Biroul NTRA"
+      },
+      "18": {
+        "caption": "Ziua aprobării NTRA — sărbătoare",
+        "location": "Campus GUC"
+      },
+      "19": {
+        "caption": "Documente legale depuse la DHL"
+      },
+      "20": {
+        "caption": "Documente finale la punctul DHL",
+        "location": "Punct DHL"
+      },
+      "21": {
+        "caption": "Documentația finală de vămuire depusă",
+        "location": "Punct DHL"
+      }
+    }
+  },
+  "footer": {
+    "followUs": "Urmărește călătoria noastră",
+    "rights": "© 2026 RAVEN GP. Inteligența Își Ia Zborul.",
+    "officialEntrant": "Participant Oficial: Bosch Future Mobility Challenge 2026"
+  }
+}
