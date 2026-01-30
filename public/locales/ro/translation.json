@@ -101,7 +101,7 @@
         "customs": "Lupta Vamală"
       },
       "footer": "Nu renunța niciodată. Mașina vine.",
-      "footerDesc": "O mașină RC educațională la scara 1/10 — marcată inițial de vamă ca 'piese de schimb auto', apoi escaladată la NTRA ca 'problemă de securitate națională'. Ceea ce a urmat au fost 63 de zile de apeluri telefonice zilnice, email-uri la orice oră și vizite la autorități.",
+      "footerDesc": "Un prototip educațional la scară 1/10 — marcat inițial pentru o clasificare vamală suplimentară, apoi transferat către o revizuire de reglementare specializată sub cadrele tehnice instituționale. Ceea ce a urmat au fost 63 de zile de angajament persistent, depuneri tehnice detaliate și utilizarea rețelei noastre universitare și industriale. De la Președintele GUC, la profesori seniori, până la colaborarea directă cu NTRA (Autoritatea Națională de Reglementare în Comunicații) — am navigat prin fiecare canal oficial pentru a reduce decalajul dintre inovație și reglementare.",
       "footerBadge": "Mândri să fim singura echipă africană — reprezentând și lumea arabă și Orientul Mijlociu."
     },
     "events": {
@@ -150,8 +150,8 @@
         "description": "Notificare că expedierea a fost 'vămuită' — sărbătoare prematură"
       },
       "11": {
-        "event": "Respingere NTRA",
-        "description": "Respins citând 'securitate națională' — o mașină de jucărie 1/10 marcată ca amenințare"
+        "event": "Actualizare Revizuire Reglementară",
+        "description": "Expediere marcată pentru clasificare specializată — necesită verificare instituțională suplimentară pentru prototipuri controlate de la distanță"
       },
       "12": {
         "event": "Intervenție de Urgență",
@@ -246,7 +246,7 @@
     "subtitle": "În Culise",
     "description": "Drumul către BFMC 2026 nu a fost doar cod — au fost documente vamale, drumuri la aeroport și credință neclintită. Am început să documentăm călătoria cu luni înainte de înregistrare.",
     "note": "* Subtitrările în engleză pentru videoclipuri vor fi disponibile în curând.",
-    "story": "Când mașina noastră a fost clasificată greșit de vamă ca 'piese auto' și respinsă de NTRA, majoritatea echipelor ar fi intrat în panică. Noi am dublat strategia Simulation-First. Datele de mai jos o demonstrează.",
+    "story": "Când expedierea mașinii noastre a întâmpinat întârzieri de reglementare neașteptate în timpul clasificării, am ales să dublăm strategia noastră Simulation-First. Datele de mai jos o demonstrează — ne-am construit baza de cod și documentația cu mult timp înainte de sosirea hardware-ului. În timp ce navigam prin aceste proceduri complexe, geamănul nostru digital a continuat să evolueze. Aceste obstacole nu ne-au încetinit; ne-au ascuțit hotărârea tehnică.",
     "media": {
       "0": {
         "caption": "Parcați și pregătiți — timp de sushi",

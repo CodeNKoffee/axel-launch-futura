@@ -101,7 +101,7 @@
         "customs": "Customs Battle"
       },
       "footer": "Never give up. The car is coming.",
-      "footerDesc": "A 1/10 scale educational RC car — initially flagged by customs as \"vehicle spare parts,\" then escalated to NTRA review as a \"national security concern\" under Egypt's strict counter-terrorism regulations on autonomous and remote-controlled technology. What followed was 63 days of daily phone calls, email threads at all hours, airport visits, and leveraging every university and industry connection we had. From the GUC President to senior faculty to direct engagement with NTRA officials — we left no stone unturned.",
+      "footerDesc": "A 1/10 scale educational prototype — initially flagged for additional customs classification, then transitioned to a specialized regulatory review under institutional tech frameworks. What followed was 63 days of persistent engagement, detailed technical submissions, and leveraging our university and industry network. From the GUC President to senior faculty to direct collaboration with the NTRA (National Telecommunications Regulatory Authority) — we navigated every official channel to bridge the gap between innovation and regulation.",
       "footerBadge": "Proud to be the only African team — also representing the Arab world and Middle East."
     },
     "events": {
@@ -150,8 +150,8 @@
         "description": "Notification that shipment was \"cleared\" — celebration was premature"
       },
       "11": {
-        "event": "NTRA Rejection",
-        "description": "Rejected citing \"national security concerns\" — a 1/10 scale toy car flagged as a threat"
+        "event": "Regulatory Review Update",
+        "description": "Shipment flagged for specialized classification — requires additional institutional verification for remote-controlled prototypes"
       },
       "12": {
         "event": "Emergency Intervention",
@@ -246,7 +246,7 @@
     "subtitle": "Behind The Scenes",
     "description": "The road to BFMC 2026 wasn't just code — it was customs documents, airport runs, and unwavering belief. We started documenting our journey months before even registering, because we knew we'd be part of this future, regardless of the odds.",
     "note": "* English captions for videos will be available soon.",
-    "story": "When our car was misclassified by customs as \"vehicle spare parts\" and rejected by NTRA, most teams would have panicked. We doubled down on our Simulation-First strategy. The dates below prove it — we were working and documenting long before valid registration. While fighting bureaucracy, our digital twin kept evolving. The struggle didn't stop us; it defined us.",
+    "story": "When our car shipment faced unexpected regulatory delays during classification, we chose to double down on our Simulation-First strategy. The dates below prove it — we were building our codebase and documentation long before the hardware arrived. While navigating these complex procedures, our digital twin kept evolving. These hurdles didn't slow us down; they sharpened our technical resolve.",
     "media": {
       "0": {
         "caption": "Parked and ready — sushi time, arrived right on time",
