@@ -18,6 +18,7 @@ import cargoVillageVideo from '@/assets/our-journey/at-cargo-villiage-dhl-area-a
 import toAirportVideo1 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo.mp4';
 import toAirportVideo2 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo-2.mp4';
 import toAirportVideo3 from '@/assets/our-journey/to-airport-dhl-cargo-villiage-cairo-3.mp4';
+import lostAtCargo from '@/assets/our-journey/hatem-amr-omar-visit0-dhl-cargo-village-and-getfumbled-by-security-workers-lost.mp4';
 
 // Dec 8, 2025 - BFMC Workshop: Brain session
 import yasminBrainSession from '@/assets/our-journey/Yasmin-inside-the-BFMC Workshop-Brain-session.jpeg';
@@ -116,6 +117,13 @@ const journeyMediaRaw = [
     captionKey: '9',
     date: 'Nov 30, 2025',
     locationKey: '9',
+  },
+  {
+    type: 'video',
+    src: lostAtCargo,
+    captionKey: '22',
+    date: 'Nov 30, 2025',
+    locationKey: '22',
   },
   {
     type: 'image',
