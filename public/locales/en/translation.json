@@ -196,6 +196,10 @@
       "22": {
         "event": "Awaiting Release",
         "description": "DHL confirms ready — standing by for delivery"
+      },
+      "23": {
+        "event": "NSD Security Check",
+        "description": "DHL confirmed status: Awaiting final security clearance from NSD"
       }
     }
   },

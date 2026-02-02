@@ -35,7 +35,7 @@ const getStatusIcon = (status: string) => {
 export const EngineeringScoreboard = () => {
   const { t } = useTranslation();
   const [countdown, setCountdown] = useState(getCountdown());
-  const [showTimeline, setShowTimeline] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -68,6 +68,7 @@ export const EngineeringScoreboard = () => {
     { date: 'Jan 24, 2026', status: 'approved', type: 'customs' },
     { date: 'Jan 26, 2026', status: 'approved', type: 'customs' },
     { date: 'Jan 28, 2026', status: 'pending', type: 'customs' },
+    { date: 'Feb 2, 2026', status: 'pending', type: 'nsd' },
   ];
 
   return (
@@ -173,7 +174,7 @@ export const EngineeringScoreboard = () => {
             </p>
             <button
               onClick={() => setShowTimeline(!showTimeline)}
-              className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
+              className="flex items-center gap-2 text-sm font-semibold bg-primary text-black px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors w-full justify-center"
             >
               {t('engineeringScoreboard.viewTimeline')}
               {showTimeline ? (
@@ -182,8 +183,7 @@ export const EngineeringScoreboard = () => {
                 <ChevronDown className="w-4 h-4" />
               )}
             </button>
-          </div>
-        </motion.div>
+          </div>        </motion.div>
 
         {/* Expandable Timeline */}
         <motion.div
@@ -271,7 +271,7 @@ export const EngineeringScoreboard = () => {
                           ? 'bg-primary/20 text-primary'
                           : 'bg-yellow-500/20 text-yellow-500'
                           }`}>
-                          {item.type === 'competition' ? 'BFMC' : 'DHL/NTRA'}
+                          {item.type === 'competition' ? 'BFMC' : item.type === 'nsd' ? 'DHL/NSD' : 'DHL/NTRA'}
                         </span>
                         {item.status === 'approved' && (
                           <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-500">

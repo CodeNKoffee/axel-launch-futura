@@ -196,6 +196,10 @@
       "22": {
         "event": "În Așteptarea Eliberării",
         "description": "DHL confirmă că totul e gata — așteptăm livrarea"
+      },
+      "23": {
+        "event": "Verificare Securitate NSD",
+        "description": "DHL confirmă statusul: Așteptăm avizul final de securitate de la NSD"
       }
     }
   },
@@ -332,6 +336,10 @@
       "21": {
         "caption": "Documentația finală de vămuire depusă",
         "location": "Punct DHL"
+      },
+      "22": {
+        "caption": "Ne-am 'ping-pong-uit' — adică am mers în cercuri și ne-am pierdut! Dar oamenii au început să ne ajute odată ce și-au dat seama că suntem pierduți 😂",
+        "location": "Aeroportul Cairo - DHL Cargo Village"
       }
     }
   },
