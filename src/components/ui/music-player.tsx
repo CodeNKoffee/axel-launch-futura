@@ -109,7 +109,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
       setDuration(0);
       setCurrentTime(0);
       if (isPlaying) {
-        const id = setTimeout(() => { a.play().catch(()=>{}); }, 60);
+        const id = setTimeout(() => { a.play().catch(() => { }); }, 60);
         prevIndexRef.current = index;
         return () => clearTimeout(id);
       }
@@ -144,14 +144,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
       { duration: 700, intensity: 0.5 },   // Drop
       { duration: 500, intensity: 0.8 },   // Mid
     ];
-    
+
     let phaseIndex = 0;
     let lastUpdate = Date.now();
 
     const animateWaveform = () => {
       const now = Date.now();
       const phase = intensityPhases[phaseIndex % intensityPhases.length];
-      
+
       if (now - lastUpdate > phase.duration) {
         phaseIndex++;
         lastUpdate = now;
@@ -192,9 +192,9 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
         const wave1 = Math.sin(time * 2 + i * 0.5) * variance * 0.3;
         const wave2 = Math.sin(time * 3 - i * 0.3) * variance * 0.2;
         const randomPulse = Math.sin(time * 4 + i) * variance * 0.5;
-        
+
         const target = baseHeight + wave1 + wave2 + randomPulse;
-        
+
         // Smooth interpolation towards target
         const diff = target - val;
         return val + diff * smoothing;
@@ -226,16 +226,16 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
       { r: 76, g: 175, b: 80 },     // Accent Green
       { r: 33, g: 150, b: 243 }     // Back to Blue
     ];
-    
+
     let currentPhase = 0;
     let progress = 0;
 
     const animateColor = () => {
       const from = colorPhases[currentPhase];
       const to = colorPhases[(currentPhase + 1) % colorPhases.length];
-      
+
       progress += 0.003; // Very slow, subtle transition
-      
+
       if (progress >= 1) {
         progress = 0;
         currentPhase = (currentPhase + 1) % colorPhases.length;
@@ -271,7 +271,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
         initial={{ x: 400, opacity: 0 }}
         animate={{ x: hidden ? 400 : (isCollapsed ? 320 : 0), opacity: hidden ? 0 : 1 }}
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-0 right-0 z-40 h-screen w-80 ${hidden ? 'pointer-events-none select-none' : ''}`}
+        className={`fixed top-0 right-0 z-[60] h-screen w-80 ${hidden ? 'pointer-events-none select-none' : ''}`}
         aria-hidden={hidden}
       >
         {/* Floating Toggle Button - visible when collapsed */}
@@ -342,17 +342,17 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
             </>
           )}
           <div className="flex flex-col items-center gap-2">
-            <motion.svg 
-              width="20" 
-              height="20" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
+            <motion.svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
               strokeLinejoin="round"
               animate={{
-                color: isPlaying 
+                color: isPlaying
                   ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
                   : 'hsl(var(--primary))',
                 y: isPlaying ? [-1, 1, -1] : 0
@@ -372,17 +372,17 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
           </div>
         </motion.button>
 
-        <motion.div 
+        <motion.div
           className="relative h-full overflow-hidden bg-gradient-to-b from-black/95 via-black/90 to-black/95 backdrop-blur-xl border-l border-primary/20 flex flex-col"
           animate={{
-            boxShadow: isPlaying 
+            boxShadow: isPlaying
               ? `${-8}px 0 ${30}px rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0.25)`
               : '-8px 0 30px rgba(33, 150, 243, 0.15)'
           }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
           {/* Racing stripe accent with color transition */}
-          <motion.div 
+          <motion.div
             className="absolute top-0 left-0 w-1 h-full opacity-70"
             animate={{
               background: isPlaying
@@ -391,7 +391,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
             }}
             transition={{ duration: 1, ease: "easeInOut" }}
           />
-          
+
           {/* Close/Collapse Button */}
           <motion.button
             onClick={() => setIsCollapsed(true)}
@@ -404,14 +404,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
               <path d="M9 18l6-6-6-6" />
             </svg>
           </motion.button>
-          
+
           {/* Header */}
           <div className="relative p-6 border-b border-primary/10">
             <div className="flex items-center gap-3 mb-2">
-              <motion.div 
+              <motion.div
                 className="w-2 h-2 rounded-full"
                 animate={{
-                  backgroundColor: isPlaying 
+                  backgroundColor: isPlaying
                     ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
                     : 'rgb(76, 175, 80)',
                   scale: isPlaying ? [1, 1.2, 1] : 1
@@ -421,10 +421,10 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
                   scale: { duration: 0.8, repeat: Infinity, ease: "easeInOut" }
                 }}
               />
-              <motion.h3 
+              <motion.h3
                 className="text-xs uppercase tracking-[0.2em] font-bold"
                 animate={{
-                  color: isPlaying 
+                  color: isPlaying
                     ? `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`
                     : 'hsl(var(--primary))'
                 }}
@@ -450,15 +450,15 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
               {waveformBars.map((height, i) => {
                 const normalizedHeight = Math.max(15, Math.min(100, height));
                 const bassZone = i < 8;
-                const opacity = isPlaying 
+                const opacity = isPlaying
                   ? 0.5 + (normalizedHeight / 200)
                   : 0.2;
-                
+
                 return (
                   <motion.div
                     key={i}
                     className={`flex-1 rounded-t ${bassZone ? 'bg-gradient-to-t from-accent via-primary to-primary' : 'bg-gradient-to-t from-primary to-accent'}`}
-                    animate={{ 
+                    animate={{
                       height: `${normalizedHeight}%`,
                       opacity: opacity
                     }}
@@ -467,7 +467,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
                       opacity: { duration: 0.15, ease: "easeInOut" }
                     }}
                     style={{
-                      boxShadow: isPlaying && normalizedHeight > 60 
+                      boxShadow: isPlaying && normalizedHeight > 60
                         ? `0 0 16px rgba(76, 175, 80, ${opacity * 0.7}), 0 0 8px rgba(76, 175, 80, ${opacity * 0.4})`
                         : 'none'
                     }}
@@ -485,46 +485,46 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
             </div>
             <div className="relative h-2 group cursor-pointer">
               <div className="absolute inset-0 rounded-full bg-secondary/50 overflow-hidden">
-                <div 
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full transition-[width] duration-150 ease-linear" 
-                  style={{ width: `${progress * 100}%` }} 
+                <div
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full transition-[width] duration-150 ease-linear"
+                  style={{ width: `${progress * 100}%` }}
                 />
               </div>
-              <input 
-                aria-label="Seek" 
-                type="range" 
-                min={0} 
-                max={duration || 0} 
-                step={0.1} 
-                value={currentTime} 
-                onChange={(e)=>{ const val = Number(e.target.value); if(audioRef.current) audioRef.current.currentTime = val; setCurrentTime(val); }} 
-                className="absolute inset-0 w-full opacity-0 cursor-pointer" 
+              <input
+                aria-label="Seek"
+                type="range"
+                min={0}
+                max={duration || 0}
+                step={0.1}
+                value={currentTime}
+                onChange={(e) => { const val = Number(e.target.value); if (audioRef.current) audioRef.current.currentTime = val; setCurrentTime(val); }}
+                className="absolute inset-0 w-full opacity-0 cursor-pointer"
               />
             </div>
           </div>
 
           {/* Transport Controls */}
           <div className="relative px-6 py-6 flex items-center justify-center gap-4">
-            <button 
-              aria-label="Previous" 
-              onClick={prev} 
+            <button
+              aria-label="Previous"
+              onClick={prev}
               className="h-12 w-12 rounded-full border border-primary/30 bg-secondary/50 flex items-center justify-center hover:border-primary hover:bg-primary/10 transition-all duration-300 racing-glow group"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:text-primary transition-colors">
-                <path d="M19 20L9 12l10-8v16Z"/>
-                <path d="M5 19V5"/>
+                <path d="M19 20L9 12l10-8v16Z" />
+                <path d="M5 19V5" />
               </svg>
             </button>
-            
-            <button 
-              aria-label={isPlaying ? 'Pause' : 'Play'} 
-              onClick={toggle} 
+
+            <button
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+              onClick={toggle}
               className="h-16 w-16 rounded-full border-2 border-primary bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center hover:from-primary/40 hover:to-accent/40 transition-all duration-300 shadow-[0_0_30px_rgba(33,150,243,0.4)] hover:shadow-[0_0_50px_rgba(33,150,243,0.6)] group"
             >
               {isPlaying ? (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-primary group-hover:scale-110 transition-transform">
-                  <rect x="6" y="4" width="4" height="16" rx="1"/>
-                  <rect x="14" y="4" width="4" height="16" rx="1"/>
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
                 </svg>
               ) : (
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" className="text-primary group-hover:scale-110 transition-transform ml-1">
@@ -532,30 +532,29 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
                 </svg>
               )}
             </button>
-            
-            <button 
-              aria-label="Next" 
-              onClick={next} 
+
+            <button
+              aria-label="Next"
+              onClick={next}
               className="h-12 w-12 rounded-full border border-primary/30 bg-secondary/50 flex items-center justify-center hover:border-primary hover:bg-primary/10 transition-all duration-300 racing-glow group"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:text-primary transition-colors">
-                <path d="M5 4l10 8-10 8V4Z"/>
-                <path d="M19 5v14"/>
+                <path d="M5 4l10 8-10 8V4Z" />
+                <path d="M19 5v14" />
               </svg>
             </button>
           </div>
 
           {/* Options */}
           <div className="relative px-6 py-4 flex items-center justify-between border-t border-primary/10">
-            <button 
-              aria-label="Toggle Shuffle" 
-              onClick={() => setShuffle(s => !s)} 
-              className={`h-10 w-10 rounded-lg border flex items-center justify-center transition-all duration-300 ${
-                shuffle 
-                  ? 'border-primary bg-primary/20 text-primary shadow-[0_0_20px_rgba(33,150,243,0.3)]' 
+            <button
+              aria-label="Toggle Shuffle"
+              onClick={() => setShuffle(s => !s)}
+              className={`h-10 w-10 rounded-lg border flex items-center justify-center transition-all duration-300 ${shuffle
+                  ? 'border-primary bg-primary/20 text-primary shadow-[0_0_20px_rgba(33,150,243,0.3)]'
                   : 'border-primary/30 bg-secondary/30 text-muted-foreground hover:border-primary/50 hover:text-primary'
-              }`}
-            > 
+                }`}
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 4h2v4" />
                 <path d="M4 4h5l5 8 3 4h3" />
@@ -563,15 +562,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
                 <path d="M4 20h5l2.5-4" />
               </svg>
             </button>
-            
-            <button 
-              aria-label="Toggle Repeat" 
-              onClick={() => setRepeat(r => !r)} 
-              className={`h-10 w-10 rounded-lg border flex items-center justify-center transition-all duration-300 ${
-                repeat 
-                  ? 'border-primary bg-primary/20 text-primary shadow-[0_0_20px_rgba(33,150,243,0.3)]' 
+
+            <button
+              aria-label="Toggle Repeat"
+              onClick={() => setRepeat(r => !r)}
+              className={`h-10 w-10 rounded-lg border flex items-center justify-center transition-all duration-300 ${repeat
+                  ? 'border-primary bg-primary/20 text-primary shadow-[0_0_20px_rgba(33,150,243,0.3)]'
                   : 'border-primary/30 bg-secondary/30 text-muted-foreground hover:border-primary/50 hover:text-primary'
-              }`}
+                }`}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 1l4 4-4 4" />
@@ -593,15 +591,15 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
                 <div className="absolute inset-0 rounded-full bg-secondary/50 overflow-hidden">
                   <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full" style={{ width: `${volume * 100}%` }} />
                 </div>
-                <input 
-                  aria-label="Volume" 
-                  type="range" 
-                  min={0} 
-                  max={1} 
-                  step={0.01} 
-                  value={volume} 
-                  onChange={(e)=>{ const v = Number(e.target.value); setVolume(v); if(audioRef.current) audioRef.current.volume = v; }} 
-                  className="absolute inset-0 w-full opacity-0 cursor-pointer" 
+                <input
+                  aria-label="Volume"
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={volume}
+                  onChange={(e) => { const v = Number(e.target.value); setVolume(v); if (audioRef.current) audioRef.current.volume = v; }}
+                  className="absolute inset-0 w-full opacity-0 cursor-pointer"
                 />
               </div>
               <span className="text-xs font-mono text-muted-foreground w-8 text-right">{Math.round(volume * 100)}</span>
@@ -620,11 +618,10 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ hidden }) => {
                     setTimeout(() => play(), 100);
                   }
                 }}
-                className={`w-full text-left p-2 rounded-lg transition-all duration-300 ${
-                  idx === index
+                className={`w-full text-left p-2 rounded-lg transition-all duration-300 ${idx === index
                     ? 'bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(33,150,243,0.2)]'
                     : 'hover:bg-secondary/30 border border-transparent'
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-2">
                   <span className={`text-xs font-mono w-6 ${idx === index ? 'text-primary' : 'text-muted-foreground'}`}>
