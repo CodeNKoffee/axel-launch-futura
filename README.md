@@ -1,73 +1,86 @@
-# Welcome to your Lovable project
+## RAVEN GP — The Official Race Week Experience
 
-## Project info
+<p align="center">
+  <img src="./src/assets/racing-bg-1.jpg" alt="RAVEN GP Cinematic Header" width="100%" style="border-radius:12px;">
+</p>
 
-**URL**: https://lovable.dev/projects/cc914fe2-f31c-41b9-8ddf-f6c59ca464f8
+**Lights out and away we go.** 
 
-## How can I edit this code?
+Welcome to **RAVEN GP** — the official digital paddock for our Bosch Future Mobility Challenge entry. This isn't just a website; it's a high-performance telemetry interface designed to bring the adrenaline of the track to your screen.
 
-There are several ways of editing your application.
+Built with the precision of a Formula 1 team, RAVEN GP combines cinematic visuals, race-day atmosphere, and cutting-edge web technology to deliver the ultimate reveal.
 
-**Use Lovable**
+## Grid Preview
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/cc914fe2-f31c-41b9-8ddf-f6c59ca464f8) and start prompting.
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin:24px 0;">
+  
+  <div style="flex:1;min-width:260px;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+    <h3 style="margin:0 0 8px 0; font-size: 1.25rem;">🏎️ Race Day Atmosphere</h3>
+    <p style="margin:0;color:#4b5563;font-size:14px;line-height:1.5;">
+      Feel the tension build with our custom <strong>Starting Lights Sequence</strong> and immersive, high-octane video backgrounds. It's not just a landing page; it's the warm-up lap.
+    </p>
+  </div>
 
-Changes made via Lovable will be committed automatically to this repo.
+  <div style="flex:1;min-width:260px;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+    <h3 style="margin:0 0 8px 0; font-size: 1.25rem;">🌍 World Championship (i18n)</h3>
+    <p style="margin:0;color:#4b5563;font-size:14px;line-height:1.5;">
+      Competing on the global stage. Seamless, route-based localization for <strong>English</strong>, <strong>Romanian</strong>, and <strong>Arabic</strong> means we speak the language of speed, everywhere.
+    </p>
+  </div>
 
-**Use your preferred IDE**
+  <div style="flex:1;min-width:260px;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+    <h3 style="margin:0 0 8px 0; font-size: 1.25rem;">⚡ Engineering Excellence</h3>
+    <p style="margin:0;color:#4b5563;font-size:14px;line-height:1.5;">
+      Under the hood: a turbocharged <strong>Vite</strong> engine, <strong>React</strong> chassis, and <strong>Tailwind</strong> aerodynamics. Zero drag, maximum performance.
+    </p>
+  </div>
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+</div>
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Telemetry & Specs
 
-Follow these steps:
+- **Cinematic Visuals**: Full-screen atmospherics (`racing-bg-1.jpg`, `racing-bg-2.jpg`) that put you in the driver's seat.
+- **Precision UI**: Components honed with `shadcn/ui` and `framer-motion` for buttery smooth cornering (transitions).
+- **Global Circuit Support**: Smart URL routing (`/:lng/...`) for instant language adaptation.
+- **Paddock Sounds**: Integrated audio player to set the race-day mood.
+- **Mobile Aero Package**: Fully responsive design that performs on any screen size.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+## Pit Wall (Code Map)
+
+- `src/App.tsx` — Race Control: Routing and main logic.
+- `src/components/F1StartingLights.tsx` — The Launch Sequence: Essential timing animation.
+- `src/locales/` — Team Radio: Translation files for clear communication.
+- `src/assets/` — livery: High-res assets and textures.
+- `src/pages/` — Sectors: Individual page components.
+
+## Engine Start (Quick Run)
+
+Get the car out of the garage:
+
+```bash
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+cd axel-launch-futura
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Check telemetry at http://localhost:8080.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Qualifying Setup (Build)
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+npm run preview
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Join the Team
 
-## What technologies are used for this project?
+1.  **Fork** the repository.
+2.  **Create** a feature branch (`git checkout -b feature/new-aero-package`).
+3.  **Commit** your upgrades.
+4.  **Push** to the branch and open a Pull Request.
 
-This project is built with:
+## License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+PROPRIETARY TECH of **RAVEN GP**. Part of the **Bosch Future Mobility Challenge**.
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/cc914fe2-f31c-41b9-8ddf-f6c59ca464f8) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
