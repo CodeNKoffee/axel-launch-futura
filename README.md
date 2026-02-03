@@ -12,25 +12,25 @@ Built with the precision of a Formula 1 team, RAVEN GP combines cinematic visual
 
 ## Grid Preview
 
-<div style="display:flex;gap:16px;flex-wrap:wrap;margin:24px 0;">
+<div style="display:flex; gap:16px; flex-wrap:wrap; margin:24px 0;">
   
-  <div style="flex:1;min-width:260px;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);">
-    <h3 style="margin:0 0 8px 0; font-size: 1.25rem;">🏎️ Race Day Atmosphere</h3>
-    <p style="margin:0;color:#4b5563;font-size:14px;line-height:1.5;">
+  <div style="flex:1; min-width:200px; background:#fff; color:#111; border-radius:10px; padding:18px; box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+    <h3 style="margin:0 0 8px 0; font-size:1.25rem; color:#000;">🏎️ Race Day Atmosphere</h3>
+    <p style="margin:0; color:#4b5563; font-size:14px; line-height:1.5;">
       Feel the tension build with our custom <strong>Starting Lights Sequence</strong> and immersive, high-octane video backgrounds. It's not just a landing page; it's the warm-up lap.
     </p>
   </div>
 
-  <div style="flex:1;min-width:260px;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);">
-    <h3 style="margin:0 0 8px 0; font-size: 1.25rem;">🌍 World Championship (i18n)</h3>
-    <p style="margin:0;color:#4b5563;font-size:14px;line-height:1.5;">
+  <div style="flex:1; min-width:200px; background:#fff; color:#111; border-radius:10px; padding:18px; box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+    <h3 style="margin:0 0 8px 0; font-size:1.25rem; color:#000;">🌍 World Championship (i18n)</h3>
+    <p style="margin:0; color:#4b5563; font-size:14px; line-height:1.5;">
       Competing on the global stage. Seamless, route-based localization for <strong>English</strong>, <strong>Romanian</strong>, and <strong>Arabic</strong> means we speak the language of speed, everywhere.
     </p>
   </div>
 
-  <div style="flex:1;min-width:260px;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);">
-    <h3 style="margin:0 0 8px 0; font-size: 1.25rem;">⚡ Engineering Excellence</h3>
-    <p style="margin:0;color:#4b5563;font-size:14px;line-height:1.5;">
+  <div style="flex:1; min-width:200px; background:#fff; color:#111; border-radius:10px; padding:18px; box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+    <h3 style="margin:0 0 8px 0; font-size:1.25rem; color:#000;">⚡ Engineering Excellence</h3>
+    <p style="margin:0; color:#4b5563; font-size:14px; line-height:1.5;">
       Under the hood: a turbocharged <strong>Vite</strong> engine, <strong>React</strong> chassis, and <strong>Tailwind</strong> aerodynamics. Zero drag, maximum performance.
     </p>
   </div>
@@ -44,6 +44,14 @@ Built with the precision of a Formula 1 team, RAVEN GP combines cinematic visual
 - **Global Circuit Support**: Smart URL routing (`/:lng/...`) for instant language adaptation.
 - **Paddock Sounds**: Integrated audio player to set the race-day mood.
 - **Mobile Aero Package**: Fully responsive design that performs on any screen size.
+
+## Technical Scrutiny (Development)
+
+Just like the FIA checks every car, we ensure code quality before hitting the track.
+
+- **Linting**: `npm run lint` — Checks for aerodynamic flaws in the code (ESLint).
+- **Formatting**: Engineered with Prettier for clean airflow.
+- **Build**: `npm run build` — The final race configuration.
 
 ## Pit Wall (Code Map)
 
@@ -73,6 +81,14 @@ npm run build
 npm run preview
 ```
 
+## The Pit Crew
+
+Built by the **RAVEN GP** engineering team. 
+
+- **Frontend Engineers**: Crafting the user experience.
+- **Designers**: Ensuring the livery looks fast standing still.
+- **Strategy**: Coordinating the reveal for maximum impact.
+
 ## Join the Team
 
 1.  **Fork** the repository.
@@ -83,4 +99,5 @@ npm run preview
 ## License
 
 PROPRIETARY TECH of **RAVEN GP**. Part of the **Bosch Future Mobility Challenge**.
+
 
